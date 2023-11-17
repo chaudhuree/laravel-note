@@ -1,0 +1,994 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>controller - request - response</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+    margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-interactiveBlue { background-color: rgba(35, 131, 226, .07); }
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-translucentGray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+.select-value-color-pageGlass { background-color: undefined; }
+.select-value-color-washGlass { background-color: undefined; }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="beea392b-d91f-4f1a-b25b-c6b8835234d9" class="page sans"><header><h1 class="page-title">controller - request - response</h1><p class="page-description"></p></header><div class="page-body"><ul id="f2a5b024-e733-4fd4-89a7-40efc5aad43a" class="bulleted-list"><li style="list-style-type:disc">app&gt; Http&gt; Controllers → folder structure </li></ul><ul id="556f4824-3fe7-490f-a8cc-650170b9d9e2" class="bulleted-list"><li style="list-style-type:disc"><code>php artisan make:controller </code><mark class="highlight-blue"><code>DemoController</code></mark></li></ul><ul id="a965f219-8033-45c0-bb2a-ba6e0300b0e7" class="toggle"><li><details open=""><summary>basic controller</summary><figure id="a17e6d07-c685-49bb-bef7-b845f8cdcafa" class="image"><a href="controller%20-%20request%20-%20response%20beea392bd91f4f1ab25bc6b8835234d9/Untitled.png"><img style="width:432px" src="controller%20-%20request%20-%20response%20beea392bd91f4f1ab25bc6b8835234d9/Untitled.png"/></a></figure></details></li></ul><h3 id="efc2f551-a61e-447a-b8d2-b2853f87b949" class=""><span style="border-bottom:0.05em solid">REQUEST:</span></h3><ul id="183aabf8-2612-456b-b1af-01ed45f01961" class="toggle"><li><details open=""><summary>route controller usage</summary><ul id="b003fdea-22ea-4a6a-ae33-8ef0c1630991" class="toggle"><li><details open=""><summary>DemoController</summary><pre id="5d5bbd0b-6591-44bd-aed4-bd5bd4fb6559" class="code"><code>&lt;?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+
+class DemoController extends Controller
+{
+   function demoAction(): string {
+      return &quot;this is a test controller action&quot;;
+   }
+}</code></pre><p id="de77ac0b-210e-45f4-8296-c52d6bf47acf" class="">
+</p></details></li></ul><ul id="030d618b-27f5-4cb4-9314-bbaeb5fbc4d4" class="toggle"><li><details open=""><summary>routes&gt;web.api (localhost theke testing time a kernel theke csrf token comment kore dea ahste hobe)</summary><pre id="693782db-8a00-4877-bbd5-4cf8e5a5a0a5" class="code"><code>&lt;?php
+
+use App\Http\Controllers\DemoController; // imported
+use Illuminate\Support\Facades\Route;
+
+Route::get(&#x27;/demo&#x27;, [DemoController::class, &#x27;demoAction&#x27;]);</code></pre></details></li></ul></details></li></ul><hr id="150f667f-58ef-4a5a-8e0a-f6a01463b40f"/><p id="949aa699-91f5-407e-9c15-9e236cb27ad7" class=""><span style="border-bottom:0.05em solid"><mark class="highlight-teal"><strong>return type is an important issue here. must notice if any error comes</strong></mark></span></p><ul id="32a5a46e-5b90-4bb7-83a6-8e1087a82c9e" class="toggle"><li><details open=""><summary>REQUEST URL PARAMETER</summary><ul id="fb40b532-3c54-4ca4-8cc6-c4d50c1695d6" class="toggle"><li><details open=""><summary>controller</summary><pre id="b8030bc6-3f9f-4169-88da-fc5fbf0b56be" class="code"><code>&lt;?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+
+class DemoController extends Controller
+{
+   function demoAction(Request $request): string {
+     $name = $request -&gt; name;
+		 $age = $request -&gt; age;
+		 return &quot;name is = $name , age is = $age&quot;;
+   }
+}</code></pre></details></li></ul><ul id="7379ed50-99ce-4b9a-8aee-aaa6b87a5cc5" class="toggle"><li><details open=""><summary>route web.api</summary><pre id="124d7a6a-fc66-49f8-a4b1-d1e47a3cda2d" class="code"><code>&lt;?php
+
+use App\Http\Controllers\DemoController; // imported
+use Illuminate\Support\Facades\Route;
+
+Route::get(&#x27;/demo/{name}/{age}&#x27;, [DemoController::class, &#x27;demoAction&#x27;]);</code></pre><p id="7c4a0ab0-5f0e-48d4-bd0e-7322edffb28b" class="">
+</p></details></li></ul><p id="73119d3c-83dc-4e30-815b-d97d0fde292e" class=""><strong>url:</strong> 127.0.0.1:8000/demo/sohan/29</p><p id="ab6a925b-5d85-44d7-a14c-13acaf0603d8" class="">
+</p></details></li></ul><ul id="90f1dda3-726f-4ed3-928b-c9e09a9c1fd2" class="toggle"><li><details open=""><summary>REQUEST JSON BODY</summary><ul id="197ff695-bed6-416b-8948-3c4e6b1df680" class="toggle"><li><details open=""><summary>controller</summary><pre id="09282149-ea53-48b6-861f-80d0152adfe2" class="code"><code>&lt;?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+
+class DemoController extends Controller
+{
+   function demoAction(Request $request): string {
+     $name = $request -&gt; input(&#x27;name&#x27;);
+		 $age = $request -&gt; input(&#x27;age&#x27;);
+		 return &quot;name is = $name , age is = $age&quot;;
+   }
+}</code></pre></details></li></ul><ul id="b6cbbdeb-a220-4bb3-b8c7-165fe02dce69" class="toggle"><li><details open=""><summary>route web.api</summary><pre id="b783b5fe-c84c-4c4f-bb20-7e2987b42acb" class="code"><code>&lt;?php
+
+use App\Http\Controllers\DemoController; // imported
+use Illuminate\Support\Facades\Route;
+
+Route::get(&#x27;/demo&#x27;, [DemoController::class, &#x27;demoAction&#x27;]);</code></pre><p id="752bb400-2cde-42e9-ba73-581487e8b2f8" class="">
+</p></details></li></ul><p id="75118c58-b90a-4b5b-bb8f-5d7be8dd6c2f" class=""><strong>url:</strong> 127.0.0.1:8000/demo</p><p id="fe5e447f-41dc-44f3-8856-1443c00449f4" class="">postman or fetch or axios dea json akare pathaite hobe</p><figure id="9ff56889-f1d5-4088-a67e-ee7598920519" class="image"><a href="controller%20-%20request%20-%20response%20beea392bd91f4f1ab25bc6b8835234d9/Untitled%201.png"><img style="width:664px" src="controller%20-%20request%20-%20response%20beea392bd91f4f1ab25bc6b8835234d9/Untitled%201.png"/></a></figure><p id="d68714fa-d405-49fc-8272-86e3e3e947e9" class="">
+</p></details></li></ul><ul id="f660c756-8bbe-4703-b83d-f024ec0f67a8" class="toggle"><li><details open=""><summary>REQUEST HEADER</summary><ul id="23e5eb43-6eda-4f62-8f41-e143ff40aa1e" class="toggle"><li><details open=""><summary>controller</summary><pre id="c6cff942-1341-4e56-9d1a-96d1fdd9b057" class="code"><code>&lt;?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+
+class DemoController extends Controller
+{
+   function demoAction(Request $request): string {
+     $name = $request -&gt; header(&#x27;name&#x27;);
+		 $age = $request -&gt; header(&#x27;age&#x27;);
+		 return &quot;name is = $name , age is = $age&quot;;
+   }
+}</code></pre></details></li></ul><ul id="7a5cfecc-f0e5-43fa-9a3a-f6911996755f" class="toggle"><li><details open=""><summary>route web.api</summary><pre id="8ef44aa8-17e4-4975-ae98-2635cf6a0f82" class="code"><code>&lt;?php
+
+use App\Http\Controllers\DemoController; // imported
+use Illuminate\Support\Facades\Route;
+
+Route::get(&#x27;/demo&#x27;, [DemoController::class, &#x27;demoAction&#x27;]);</code></pre><p id="430d6c55-4a18-400d-89e1-0415adcbe8f5" class="">
+</p></details></li></ul><p id="73dc6b8f-7fb1-4404-9bc6-50140e7c7703" class=""><strong>url:</strong> 127.0.0.1:8000/demo</p><p id="08bbcf92-7317-41c3-a1b7-6fa664dccfa1" class="">postman or fetch or axios dea json akare pathaite hobe</p><figure id="d14573de-6e76-47c0-b104-d9f62dd6b366" class="image"><a href="controller%20-%20request%20-%20response%20beea392bd91f4f1ab25bc6b8835234d9/Untitled%202.png"><img style="width:1003px" src="controller%20-%20request%20-%20response%20beea392bd91f4f1ab25bc6b8835234d9/Untitled%202.png"/></a></figure></details></li></ul><ul id="7a306efd-b0a0-4437-875e-44071373d036" class="toggle"><li><details open=""><summary>EXTRACT ALL REQUEST</summary><figure id="e452288a-ac97-423c-b0c1-7562fb490900" class="image"><a href="controller%20-%20request%20-%20response%20beea392bd91f4f1ab25bc6b8835234d9/Untitled%203.png"><img style="width:1642px" src="controller%20-%20request%20-%20response%20beea392bd91f4f1ab25bc6b8835234d9/Untitled%203.png"/></a></figure><p id="43d5ff44-08de-4c57-8085-29283fbb5f5e" class="">aikhetre return type ta kintu string hobe na. array hoite pare. json hoite pare.</p></details></li></ul><hr id="d15fbec5-f530-4ac8-8ee1-d22b5859e333"/><ul id="421dc995-0d19-4ded-b24d-2358bb80e3cd" class="toggle"><li><details open=""><summary>WORKING WITH FORM DATA(MULTIPART FORMDATA)</summary><figure id="37e04c58-acd1-4ea8-bd57-b0d599d842ba" class="image"><a href="controller%20-%20request%20-%20response%20beea392bd91f4f1ab25bc6b8835234d9/Untitled%204.png"><img style="width:1104px" src="controller%20-%20request%20-%20response%20beea392bd91f4f1ab25bc6b8835234d9/Untitled%204.png"/></a></figure><pre id="d72208df-3cc2-4cb9-a46f-fe1206f4d063" class="code"><code>$request -&gt; input() 
+// this way we can get text input value</code></pre></details></li></ul><ul id="17c81fc8-bc12-4e21-8cc2-5679b63b474b" class="toggle"><li><details open=""><summary>working with file</summary><figure id="4637e2e8-49e7-4817-b3fb-e3ebea061840" class="image"><a href="controller%20-%20request%20-%20response%20beea392bd91f4f1ab25bc6b8835234d9/Untitled%205.png"><img style="width:432px" src="controller%20-%20request%20-%20response%20beea392bd91f4f1ab25bc6b8835234d9/Untitled%205.png"/></a></figure><ul id="6ee97e66-79af-4e0f-adcb-e35c27ad4f0b" class="toggle"><li><details open=""><summary>controller</summary><pre id="fbae2330-a5d0-4f8f-8e80-b72808d90f7e" class="code"><code>function demoAction(Request $request): array {
+      $file = $request-&gt;file(&#x27;photo&#x27;);
+      $fileSize=filesize($file);
+      $fileType=filetype($file);
+      $fileOriginalName=$file-&gt;getClientOriginalName();
+      $fileName = $file-&gt;getFilename();
+      $fileExtension=$file-&gt;getClientOriginalExtension();
+      $fileMimeType=$file-&gt;getMimeType();
+
+      return Array (
+         &quot;fileSize&quot; =&gt; $fileSize,
+         &quot;fileType&quot; =&gt; $fileType,
+         &quot;fileOriginalName&quot; =&gt; $fileOriginalName,
+         &quot;fileTemporaryName&quot; =&gt; $fileName,
+         &quot;fileExtension&quot; =&gt; $fileExtension,
+         &quot;fileMimeType&quot; =&gt; $fileMimeType,
+         &quot;fileExtension&quot; =&gt; $fileExtension,
+      );
+   }</code></pre></details></li></ul></details></li></ul><ul id="5bb12ebe-1735-4e6e-94cc-5ef6e610f9c5" class="toggle"><li><details open=""><summary>upload file</summary><figure id="947ecec7-e696-4c3a-aebd-1c5eab87230c" class="image"><a href="controller%20-%20request%20-%20response%20beea392bd91f4f1ab25bc6b8835234d9/Untitled%206.png"><img style="width:432px" src="controller%20-%20request%20-%20response%20beea392bd91f4f1ab25bc6b8835234d9/Untitled%206.png"/></a></figure><h3 id="a0d2caa8-1c67-4650-b41d-17db7242869a" class=""><mark class="highlight-blue_background">two ways to upoad files</mark></h3><ul id="76a47267-116a-4c88-a1e1-c98abbf5df10" class="bulleted-list"><li style="list-style-type:disc">store as - storage folder er moddhe upload hoy</li></ul><ul id="6886a821-7393-44e8-bf65-a23288953056" class="bulleted-list"><li style="list-style-type:disc">move - public folder a upload hoy</li></ul><blockquote id="d17bd90b-659e-4053-a836-a382e1fa86e0" class="">note: at a time dui folder a upload korte gele error dey</blockquote><hr id="07534acb-db2b-41fd-be98-05296fafeaaa"/><ul id="d7d4a10d-5a6a-4d55-b405-0cbfab3107cf" class="toggle"><li><details open=""><summary>public directory using move method</summary><p id="780ccab5-18c2-4dc9-8374-48cb89928b12" class=""><mark class="highlight-orange_background"><strong>we can access this file using url like: 127.0.0.1:8000/uploads/imagename.jpg</strong></mark></p><pre id="8741e59a-ce7e-469f-accd-462e16160895" class="code"><code>&lt;?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+
+class DemoController extends Controller
+{
+   function demoAction(Request $request): bool {
+      $file = $request-&gt;file(&#x27;photo&#x27;);
+      $file-&gt;move(public_path(&#x27;uploads&#x27;), $file-&gt;getClientOriginalName());
+     // this will create a folder named as uploads if not available inside 
+		 // public folder
+      return true;
+   }
+}</code></pre></details></li></ul><ul id="b8e72d89-fc4e-4195-a98e-dc490e3d2283" class="toggle"><li><details open=""><summary>storage directory using move method</summary><pre id="23dfe064-5b8a-4eb2-b658-d6762be1754a" class="code"><code>&lt;?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+
+class DemoController extends Controller
+{
+   function demoAction(Request $request): bool {
+      $file = $request-&gt;file(&#x27;photo&#x27;);
+      $file-&gt;storeAs(&#x27;uploads&#x27;, $file-&gt;getClientOriginalName());
+     // this will create a folder named as uploads if not available inside 
+		 // storage folder&#x27;s app folder.
+		 // storage&gt;app&gt;uploads&gt;imagename.jpg
+      return true;
+   }
+}</code></pre></details></li></ul><p id="8bda85be-0608-48a7-a892-12a2288a1f2e" class="">
+</p></details></li></ul><ul id="082ca0c0-9337-422c-9255-6f77ba791d79" class="toggle"><li><details open=""><summary>ip</summary><pre id="9774956d-c382-48f7-98fd-3d966baba34a" class="code"><code>//type : string
+return $request-&gt; ip();</code></pre></details></li></ul><ul id="68e6623d-1940-4b26-b6ca-0a19c8560f03" class="toggle"><li><details open=""><summary>acceptable content type</summary><pre id="83c42d2d-70f6-4527-84a2-3a859bedd034" class="code"><code>// return type array
+$request-&gt;getAcceptableContentTypes();</code></pre><figure id="fa2b9e14-7f74-4357-a47c-34e314c1002a" class="image"><a href="controller%20-%20request%20-%20response%20beea392bd91f4f1ab25bc6b8835234d9/Untitled%207.png"><img style="width:384px" src="controller%20-%20request%20-%20response%20beea392bd91f4f1ab25bc6b8835234d9/Untitled%207.png"/></a></figure><p id="dbc00735-0461-430c-a8f0-8155c7f5e475" class="">
+</p><ul id="98c2b01b-fb75-45c6-a98e-cc7d1883f0df" class="toggle"><li><details open=""><summary><mark class="highlight-yellow"><em><strong>validation</strong></em></mark></summary><figure id="6be391cc-b584-446d-98d5-ada09f0ea7ce" class="image"><a href="controller%20-%20request%20-%20response%20beea392bd91f4f1ab25bc6b8835234d9/Untitled%208.png"><img style="width:651px" src="controller%20-%20request%20-%20response%20beea392bd91f4f1ab25bc6b8835234d9/Untitled%208.png"/></a></figure><p id="93a1f731-a5cf-4ff7-9791-5c9163cf3768" class="">amra aita dea validation korte parbo. like jodi application/json hoy tahole data store korbo tachara error throw kore dibo</p><p id="bcb85df2-3ddc-4241-a34d-e13b936c74d8" class="">
+</p></details></li></ul></details></li></ul><ul id="8d30f073-e481-449e-94fd-2710faba8d10" class="toggle"><li><details open=""><summary>cookie</summary><figure id="59dd08da-50e3-41d7-b265-70bf9ec4b758" class="image"><a href="controller%20-%20request%20-%20response%20beea392bd91f4f1ab25bc6b8835234d9/Untitled%209.png"><img style="width:1445px" src="controller%20-%20request%20-%20response%20beea392bd91f4f1ab25bc6b8835234d9/Untitled%209.png"/></a></figure><pre id="b628d330-2b12-47e9-b887-be335ed1c1ce" class="code"><code>// return type array
+$request-&gt; cookie();
+or,
+// return type string
+$request -&gt; cookie(&#x27;Cookie_1&#x27;);</code></pre></details></li></ul><hr id="00881255-ef5b-4c9e-b5f9-24a8a01e0b07"/><h3 id="f72bc993-698c-4bd6-a7c5-3fcb509e2eb1" class=""><span style="border-bottom:0.05em solid">RESPONSE:</span></h3><ul id="151bd40d-8f78-469b-ae62-459df7bc5bf6" class="toggle"><li><details open=""><summary>miltiple return type</summary><figure id="f671ddf2-3141-4110-8085-65cbc65fd10d" class="image"><a href="controller%20-%20request%20-%20response%20beea392bd91f4f1ab25bc6b8835234d9/Untitled%2010.png"><img style="width:1038px" src="controller%20-%20request%20-%20response%20beea392bd91f4f1ab25bc6b8835234d9/Untitled%2010.png"/></a></figure></details></li></ul><ul id="2b2c6404-190f-4b72-9eaf-9a10ad4c8235" class="toggle"><li><details open=""><summary>multidimentional array pathaile seta response pabo JSON array akare.</summary><pre id="30234a6c-54d6-4206-8498-f7576b0e6ec8" class="code"><code>class DemoController extends Controller
+{
+   function demoAction(Request $request): array {
+      $multiDArray=Array(
+         Array(
+            &quot;id&quot;=&gt;1,
+            &quot;name&quot;=&gt;&quot;John&quot;,
+            &quot;age&quot;=&gt;21
+         ),
+         Array(
+            &quot;id&quot;=&gt;2,
+            &quot;name&quot;=&gt;&quot;Smith&quot;,
+            &quot;age&quot;=&gt;22
+         )
+      );
+      return $multiDArray;
+   }
+}</code></pre><pre id="5ba9f0aa-ca6a-4ff8-99bd-d284568014cd" class="code"><code>//response
+[
+    {
+        &quot;id&quot;: 1,
+        &quot;name&quot;: &quot;John&quot;,
+        &quot;age&quot;: 21
+    },
+    {
+        &quot;id&quot;: 2,
+        &quot;name&quot;: &quot;Smith&quot;,
+        &quot;age&quot;: 22
+    }
+]</code></pre><div id="004d0aec-89c3-4e83-a2f6-a82142c6ffcf" class="column-list"><div id="e3d1f294-261a-408a-ad3f-90dce50c8bc5" style="width:43.75%" class="column"><figure id="0256ed76-2b9d-4e50-8511-9e0d6e93aeaf" class="image"><a href="controller%20-%20request%20-%20response%20beea392bd91f4f1ab25bc6b8835234d9/Untitled%2011.png"><img style="width:288px" src="controller%20-%20request%20-%20response%20beea392bd91f4f1ab25bc6b8835234d9/Untitled%2011.png"/></a></figure></div><div id="0f5fe5e1-6697-4c68-90a0-b0eec5f829d2" style="width:56.25%" class="column"><figure id="61c9c246-7c9f-41c9-824f-572359041d6c" class="image"><a href="controller%20-%20request%20-%20response%20beea392bd91f4f1ab25bc6b8835234d9/Untitled%2012.png"><img style="width:336px" src="controller%20-%20request%20-%20response%20beea392bd91f4f1ab25bc6b8835234d9/Untitled%2012.png"/></a></figure></div></div><p id="71a25a20-078a-4f49-8923-d69bf6ab6977" class="">
+</p></details></li></ul><ul id="6f87b369-012b-4416-a01b-1165733020de" class="toggle"><li><details open=""><summary>but if it is an simple array</summary><pre id="3f9887df-e5c1-4c9b-9299-b094323a68b5" class="code"><code>lass DemoController extends Controller
+{
+   function demoAction(Request $request): array {
+    $roll = array(1,3,6,8,9);
+      return $roll;
+   }
+}</code></pre><pre id="de4cc84e-7d8a-470e-96b7-ba7edc296fb9" class="code"><code>// response
+[
+    1,
+    3,
+    6,
+    8,
+    9
+]</code></pre></details></li></ul><ul id="ff3d9141-879c-4773-9f0e-9407da94628a" class="toggle"><li><details open=""><summary>json response</summary><pre id="7e47a27a-6483-4fa4-9e5b-a946d32e8206" class="code"><code>&lt;?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\JsonResponse; // this thing need to be imported must
+use Illuminate\Http\Request;
+
+class DemoController extends Controller
+{
+   function demoAction(Request $request): JsonResponse
+   {
+      $content = array(
+         &#x27;name&#x27; =&gt; &#x27;John Doe&#x27;,
+         &#x27;age&#x27; =&gt; 27,
+         &#x27;city&#x27; =&gt; &#x27;New York&#x27;
+      );
+      $code = 201;
+      return response()-&gt;json($content, $code);
+   }
+}</code></pre><p id="a2e130e8-4224-4bf0-a12b-9b55ef14c3d0" class="">response</p><figure id="62c31e2a-39af-4231-9a70-aadbf31f41d0" class="image"><a href="controller%20-%20request%20-%20response%20beea392bd91f4f1ab25bc6b8835234d9/Untitled%2013.png"><img style="width:1030px" src="controller%20-%20request%20-%20response%20beea392bd91f4f1ab25bc6b8835234d9/Untitled%2013.png"/></a></figure><p id="d27a3ffc-db84-4d2a-a282-3e7bd06a9142" class="">another example</p><figure id="1c0d30c0-c07a-4690-a398-51485a619e8f" class="image"><a href="controller%20-%20request%20-%20response%20beea392bd91f4f1ab25bc6b8835234d9/Untitled%2014.png"><img style="width:1038px" src="controller%20-%20request%20-%20response%20beea392bd91f4f1ab25bc6b8835234d9/Untitled%2014.png"/></a></figure></details></li></ul><ul id="a6197ed2-00a1-4548-b32f-6f6c35d29fe9" class="toggle"><li><details open=""><summary>redirect</summary><pre id="fe360a2c-a1e1-4c75-88e3-dee3f3c09e0c" class="code"><code>&lt;?php
+
+namespace App\Http\Controllers;
+use Illuminate\Http\Request;
+
+class DemoController extends Controller
+{
+   function demoAction(Request $request): string
+   {
+      
+      return redirect(&quot;/nameofroute&quot;);
+   }
+}</code></pre></details></li></ul><p id="4b66f9ad-ba82-4bf2-84c0-05a7155ea3f8" class="">
+</p><ul id="aed9f997-dcc4-47f2-9c66-903b96c0605b" class="toggle"><li><details open=""><summary>file download or binary file</summary><ul id="b6358d5e-3d12-4229-972e-2234ad3f2080" class="toggle"><li><details open=""><summary>image</summary><figure id="2d74db97-b531-47ad-8f20-b91244214c09" class="image"><a href="controller%20-%20request%20-%20response%20beea392bd91f4f1ab25bc6b8835234d9/Untitled%2015.png"><img style="width:888px" src="controller%20-%20request%20-%20response%20beea392bd91f4f1ab25bc6b8835234d9/Untitled%2015.png"/></a></figure></details></li></ul><p id="ba17b62b-b7ca-4a9c-a34e-0c6751af3ed9" class="">amader laravel project a public folder er vitore uploads folder a image rakhci.</p><p id="a91f5f36-6da7-437d-b533-3f5f89153e47" class="">by default amra kintu public  dea amra muloto public folder er access payei thaki.so, amra jodi chai j uploads folder er moddhe 1.jpg pic ta access korbo tahole path hobe,</p><p id="c7fbd0c8-edd6-4343-bd40-847e5522097b" class="">“uploads/1.jpg”</p><p id="837823b7-df28-4565-9683-0cf710143614" class="">
+</p><ul id="73e09d78-ef8d-4d1b-bbc5-a18d33386fa5" class="bulleted-list"><li style="list-style-type:disc">file er preview dekhar jonne amra binary file response use kori</li></ul><ul id="c3d2a440-84ce-4e8c-8b8c-2d687a884cac" class="bulleted-list"><li style="list-style-type:disc">file download koranor jonne amra download response use kori</li></ul><pre id="3d5198d6-8d8d-4a12-a9f7-7fed21d18d69" class="code"><code>return response()-&gt;file(&quot;uploads/1.jpg&quot;);
+// for download
+return response()-&gt;download(&quot;uploads/1.jpg&quot;);</code></pre></details></li></ul><p id="880e5437-60ed-4447-874c-542494522278" class="">
+</p><ul id="c364fc30-0334-4294-a6a8-f1b58d42a327" class="toggle"><li><details open=""><summary>cookie generate</summary><ul id="2f707930-ddbf-41ef-ac74-634a23568e9c" class="toggle"><li><details open=""><summary>image</summary><figure id="0a930501-ef4d-4402-8f80-2332e5acadd2" class="image"><a href="controller%20-%20request%20-%20response%20beea392bd91f4f1ab25bc6b8835234d9/Untitled%2016.png"><img style="width:1116px" src="controller%20-%20request%20-%20response%20beea392bd91f4f1ab25bc6b8835234d9/Untitled%2016.png"/></a></figure><p id="5111e024-366a-4a92-88ed-9c9763bfd2f9" class="">
+</p></details></li></ul><pre id="f5183cd7-7d1d-4183-a4cb-e894c7990b65" class="code"><code>//controller
+&lt;?php
+
+namespace App\Http\Controllers;
+use Illuminate\Http\Request;
+
+class DemoController extends Controller
+{
+   function demoAction(Request $request)
+   {
+      // creating cooking and passing it to the response
+      $name = &#x27;democookie&#x27;;
+      $value = &#x27;demovalue&#x27;;
+      $minutes = 60;
+      $path = &#x27;/&#x27;;
+      $domain=$_SERVER[&#x27;SERVER_NAME&#x27;];
+      $secure = true;
+      $httponly = true;
+      return response(&#x27;Hello World&#x27;)-&gt;cookie($name, $value, $minutes, $path, $domain, $secure, $httponly);
+   }
+}</code></pre><p id="69c5d422-43ea-44fe-83dd-93ff6ff7d494" class="">response: cookie value ta k automated encrypted kore fele</p><figure id="ffdc8c78-136d-44b5-b4cf-275975ce45b4" class="image"><a href="controller%20-%20request%20-%20response%20beea392bd91f4f1ab25bc6b8835234d9/Untitled%2017.png"><img style="width:1392px" src="controller%20-%20request%20-%20response%20beea392bd91f4f1ab25bc6b8835234d9/Untitled%2017.png"/></a></figure></details></li></ul><ul id="d6b19417-4776-40e8-9bd2-9cf2207448de" class="toggle"><li><details open=""><summary>header set</summary><figure id="371c8268-b921-4d59-9b87-17055c1b5c32" class="image"><a href="controller%20-%20request%20-%20response%20beea392bd91f4f1ab25bc6b8835234d9/Untitled%2018.png"><img style="width:714px" src="controller%20-%20request%20-%20response%20beea392bd91f4f1ab25bc6b8835234d9/Untitled%2018.png"/></a></figure></details></li></ul><p id="570ca26f-a09e-46c8-92b9-179e9dec1eb8" class="">
+</p><ul id="5a4bc1f9-01c5-4344-b783-6a0d0098e275" class="toggle"><li><details open=""><summary>views</summary><p id="bcaa175b-3295-4674-9c33-b4e2529898da" class=""><mark class="highlight-orange_background"><span style="border-bottom:0.05em solid"><strong>resource folder er moddhe views folder er moddhe blade template thake. oita k response akare pathono hoy.</strong></span></mark></p><figure id="b85fb64c-5598-4065-b360-b12e05c2b2fa" class="image"><a href="controller%20-%20request%20-%20response%20beea392bd91f4f1ab25bc6b8835234d9/Untitled%2019.png"><img style="width:330px" src="controller%20-%20request%20-%20response%20beea392bd91f4f1ab25bc6b8835234d9/Untitled%2019.png"/></a></figure><p id="1172d538-5aa3-426e-8673-627048ba6e0d" class="">here, test and welcome ta kintu views er root a ase</p><p id="181dfdf9-aed9-4084-acf7-170faba0f822" class="">but chaudhuree.blade.php ta myviews folder er moddhe ase</p><p id="ad80f3be-6a28-40b1-a434-d9d799a1e0f5" class="">and er moddhe nestedview folder er vitore mynestedview.blade.php ase</p><p id="dfa3f9b0-ad84-45b1-842a-40d7cfecd645" class="">
+</p><p id="994ee26a-141d-4546-8017-05cd44dc0104" class="">to return view code:</p><pre id="0cac8557-e6a4-4129-a201-78659571c703" class="code"><code>return view(&#x27;filename without extension&#x27;)</code></pre><pre id="4ec7ef30-0d51-4071-adab-f53fff96fda7" class="code"><code>// for root file (direct child of views folder)
+return view(&#x27;test&#x27;)</code></pre><pre id="85fb6122-b401-4375-b333-3143fdbd76b9" class="code"><code>// nested folder view
+return view(&#x27;myviews.chaudhuree&#x27;)</code></pre><pre id="1e120842-daaa-4123-87db-8eae417865a2" class="code"><code>// more nested
+return view(&#x27;myviews.nestedview.mynestedview&#x27;)</code></pre></details></li></ul><p id="789aca44-9497-4638-a315-ea5d53c5b052" class="">
+</p><ul id="a5fa47ac-3580-49eb-aa22-b6a1481b1961" class="toggle"><li><details open=""><summary>session</summary><blockquote id="394f4cf8-57fa-43ca-abe7-f4729b67b349" class="">api route ta use korbo na session er khetre. api routing use hoy stateless operation er jonne</blockquote><ul id="d1b4c879-8595-4f23-8f2f-699bf396d466" class="toggle"><li><details open=""><summary>image</summary><figure id="7f22e0af-134a-46c8-8545-c5b005376b2e" class="image"><a href="controller%20-%20request%20-%20response%20beea392bd91f4f1ab25bc6b8835234d9/Untitled%2020.png"><img style="width:480px" src="controller%20-%20request%20-%20response%20beea392bd91f4f1ab25bc6b8835234d9/Untitled%2020.png"/></a></figure></details></li></ul><blockquote id="9bf812fa-200f-4998-b2fc-cae9d80ceaed" class=""><code>session() → pull(&quot;keyname&quot;)</code> korle session theke data ta delete hoye jay. so amra pull na kore get method use korbo <code>session() → get(&quot;keyname&quot;)</code></blockquote><p id="4ea24e56-5a4d-44a0-96c2-5dd160bf5dad" class="">
+</p></details></li></ul><p id="74ca6148-5f6d-4517-9344-6cd64790f515" class="">
+</p><h3 id="e701994d-7d40-474b-9a8c-5aca4c9e7378" class="">RESOURCE CONTROLLER</h3><p id="90f983df-cf18-4c7b-b004-e8b0ebd241e2" class=""><code>php artisan make:controller ControllerName --resource</code></p><p id="8fd652e7-23d8-455b-8070-ab94ae103653" class="">resource controller create korle aitay auto generate CRUD er jonne action create hoyei jay. amader just seigulor vitore code korte hobe. and aitar route o akta thake. just route a bivinno method like, get,put,post aigulo dea request pathailei hobe.</p><details open=""><summary style="font-weight:600;font-size:1.25em;line-height:1.3;margin:0">DEMO</summary><div class="indented"><p id="d79ed744-0168-4785-a592-d1083cbc97be" class=""><code>php artisan make:controller PhotoController --resource</code></p><ul id="a965d5c3-4299-45ac-aa44-fb5b0187151f" class="toggle"><li><details open=""><summary>controller </summary><ul id="270a3df7-9e58-43a2-bcb6-c610d63c5b6e" class="toggle"><li><details open=""><summary>image</summary><figure id="ee7d19dc-65b7-4357-9c9a-f63e0b945719" class="image"><a href="controller%20-%20request%20-%20response%20beea392bd91f4f1ab25bc6b8835234d9/Untitled%2021.png"><img style="width:384px" src="controller%20-%20request%20-%20response%20beea392bd91f4f1ab25bc6b8835234d9/Untitled%2021.png"/></a></figure></details></li></ul><pre id="c0b58602-b2c9-44dc-8c2e-bbf7673136b5" class="code"><code>&lt;?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+
+class PhotoController extends Controller
+{
+    /**
+     * Display a listing of the resource.
+     */
+    public function index()
+    {
+        //
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
+    {
+        //
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Request $request)
+    {
+        //
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function show(string $id)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(string $id)
+    {
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, string $id)
+    {
+        //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(string $id)
+    {
+        //
+    }
+}</code></pre></details></li></ul><ul id="a436564c-4409-4db0-ab0d-3b1cd001c133" class="toggle"><li><details open=""><summary>route</summary><ul id="89a9e409-b9e3-4b07-96cf-ba705a8e96f6" class="toggle"><li><details open=""><summary>image</summary><figure id="5a215fa9-d669-4ee2-99f2-d0f45a784f05" class="image"><a href="controller%20-%20request%20-%20response%20beea392bd91f4f1ab25bc6b8835234d9/Untitled%2022.png"><img style="width:775px" src="controller%20-%20request%20-%20response%20beea392bd91f4f1ab25bc6b8835234d9/Untitled%2022.png"/></a></figure></details></li></ul><pre id="9507535f-31e1-429d-89c2-aab7e6399e57" class="code"><code>// import the Controller here
+Route::resource(&#x27;photo&#x27;, PhotoController::class);
+
+// now follow the image and while calling or requesting this route just 
+// follow the method like get and url /photos is for getting the index
+// but /photos/create for creating image
+
+// /photos/{photo} put request for update but delete request 
+// for deleting the image</code></pre></details></li></ul><p id="70ebd578-a46c-4c07-a43d-884c8b8012a3" class="">
+</p></div></details><p id="49efa6ff-6e97-4685-b61d-f13c5135b9b0" class="">
+</p><p id="c69e3866-28ec-4ed2-8aa2-e918324bbced" class="">
+</p><h3 id="22137fcd-faa6-4982-a814-2ff06555374e" class="">SINGLE ACTION CONTROLLER</h3><blockquote id="f370e94e-40b4-40c4-bc58-d6863777ce91" class="">ai controller create kora hoy jokhn controller a  aktai action thakbe and seta akta action nea kaj korbe</blockquote><p id="687d7fcd-0abc-419c-88d2-c1233a8b92a3" class="">command: <code>php artisan make:controller SingleActionControllers --invokable</code></p><p id="2b41b4ce-1603-496c-bdbe-0746ab5232c1" class="">aikhane __invoke name a action create hoy.and routing a alada kore action er name dite hoy na just controller class ta dea dile auto sei action k process kore.</p><ul id="a7ef7531-37f8-4838-bdb3-3c7425594aba" class="toggle"><li><details open=""><summary>controller action</summary><figure id="bb028f5c-b7b8-4937-9a2d-e92ef9dcb1ae" class="image"><a href="controller%20-%20request%20-%20response%20beea392bd91f4f1ab25bc6b8835234d9/Untitled%2023.png"><img style="width:765px" src="controller%20-%20request%20-%20response%20beea392bd91f4f1ab25bc6b8835234d9/Untitled%2023.png"/></a></figure><p id="f3743f12-75dc-4a64-9ee5-f4af580ba1c2" class="">
+</p></details></li></ul><ul id="920a5ce5-0f67-4452-9485-a469e1996340" class="toggle"><li><details open=""><summary>routing</summary><figure id="4e117489-75e7-42da-a711-2b422c52da5b" class="image"><a href="controller%20-%20request%20-%20response%20beea392bd91f4f1ab25bc6b8835234d9/Untitled%2024.png"><img style="width:1295px" src="controller%20-%20request%20-%20response%20beea392bd91f4f1ab25bc6b8835234d9/Untitled%2024.png"/></a></figure></details></li></ul></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

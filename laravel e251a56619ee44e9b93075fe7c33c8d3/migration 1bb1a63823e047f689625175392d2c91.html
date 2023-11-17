@@ -1,0 +1,1015 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>migration</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+    margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-interactiveBlue { background-color: rgba(35, 131, 226, .07); }
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-translucentGray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+.select-value-color-pageGlass { background-color: undefined; }
+.select-value-color-washGlass { background-color: undefined; }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="1bb1a638-23e0-47f6-8962-5175392d2c91" class="page sans"><header><h1 class="page-title">migration</h1><p class="page-description"></p></header><div class="page-body"><p id="4eadc9f9-9623-4b5c-a83d-07606e853080" class=""><code>database &gt; migrations</code></p><ul id="fb08162b-17f0-484a-b73c-ddcbc7cb75f3" class="toggle"><li><details open=""><summary><mark class="highlight-orange_background"><strong>fix environment variable first:</strong></mark></summary><figure id="544138a5-c600-4505-af9b-1d3d481ab681" class="image"><a href="migration%201bb1a63823e047f689625175392d2c91/Untitled.png"><img style="width:192px" src="migration%201bb1a63823e047f689625175392d2c91/Untitled.png"/></a></figure><pre id="d212c3f0-bbd2-438c-8df2-c185b726f990" class="code"><code>DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=laraveldbprac // create a db with this name in the php myadmin
+DB_USERNAME=root
+DB_PASSWORD=root</code></pre></details></li></ul><p id="3b9705e4-05b2-4528-9b7d-fe7fa481a42a" class=""><span style="border-bottom:0.05em solid"><strong>command: </strong></span><div class="indented"><p id="cb613c59-90da-4f7c-ab7a-36330ad472f6" class="">create migration file(table): <code>php artisan make:migration table_name</code></p><p id="52fc616b-746c-4e3e-a772-886ab9e5235b" class="">create migrate (create real table in database): <code>php artisan migrate</code></p><p id="718a28c6-205d-4c2a-84da-e5560873470c" class="">database thek sob table delete korte chaile: <code>php artisan migrate:reset</code></p></div></p><ul id="2f38f37f-e9e7-4700-bf95-dd5c78d95bc3" class="toggle"><li><details open=""><summary><span style="border-bottom:0.05em solid"><strong><mark class="highlight-blue_background">naming convension</mark></strong></span></summary><figure id="ab8f0572-0acd-4a7e-83ec-6bc5e8f29464" class="image"><a href="migration%201bb1a63823e047f689625175392d2c91/Untitled%201.png"><img style="width:432px" src="migration%201bb1a63823e047f689625175392d2c91/Untitled%201.png"/></a></figure><p id="575ed856-c11b-446e-aeca-429b386d031a" class="">
+</p></details></li></ul><p id="5e831a0c-d065-4e83-8e21-791a7f877a45" class="">kono table create korte chaile: <code>php artisan make:migration create_tableNameInPluralForm</code></p><p id="81415628-8adf-4dfa-a7ee-c85f2c387bae" class="">example: <code>php artisan make:migration create_profiles</code></p><p id="1cf3166d-668d-477a-911b-df7eab412a43" class="">it will create a file and inside the file , that will have below code</p><ul id="97577b35-2a4b-4f3d-834d-1a8d761435c9" class="toggle"><li><details open=""><summary>code</summary><pre id="70a17b24-ab92-448e-ae53-ed55a4e716ce" class="code"><code>&lt;?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::create(&#x27;profiles&#x27;, function (Blueprint $table) {
+            $table-&gt;id();
+            $table-&gt;timestamps();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists(&#x27;profiles&#x27;);
+    }
+};</code></pre></details></li></ul><figure id="73c0e134-acf9-4e46-887e-2e522a87ad86" class="image"><a href="migration%201bb1a63823e047f689625175392d2c91/Untitled%202.png"><img style="width:384px" src="migration%201bb1a63823e047f689625175392d2c91/Untitled%202.png"/></a></figure><p id="f61ffbea-74db-46f9-ace6-b0ffdd7743bd" class="">fill the migration file with required field</p><ul id="9879eb0b-4f24-426c-83d5-b4abd2846600" class="toggle"><li><details open=""><summary>code</summary><pre id="dc9ae5c6-6b6b-4a91-901c-39f8acf6359b" class="code"><code>return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::create(&#x27;profiles&#x27;, function (Blueprint $table) {
+            $table-&gt;id();
+            $table-&gt;string(&#x27;name&#x27;);
+            $table-&gt;string(&#x27;email&#x27;);
+            $table-&gt;string(&#x27;password&#x27;);
+            $table-&gt;timestamps();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists(&#x27;profiles&#x27;);
+    }
+};</code></pre></details></li></ul><p id="c1b4a39c-fb2e-4f74-9af8-f79b6db0e4e8" class="">then run , <code>php artisan migrate</code></p><ul id="e5aaa8b5-5343-4790-afde-e703d60ddc2e" class="toggle"><li><details open=""><summary>result</summary><figure id="e9171ef3-31b7-4d9d-b872-e42bc6438cf3" class="image"><a href="migration%201bb1a63823e047f689625175392d2c91/Untitled%203.png"><img style="width:1032px" src="migration%201bb1a63823e047f689625175392d2c91/Untitled%203.png"/></a></figure></details></li></ul><p id="f84b06fc-0b1e-4814-8f6c-8ad625dab0e1" class="">
+</p><figure id="c25f9734-288e-4be3-a6e5-c51500041dca" class="link-to-page"><a href="migration%201bb1a63823e047f689625175392d2c91/working%20with%20column%20c25f9734288e4be3a6e5c51500041dca.html">working with column </a></figure><p id="002c7c38-b3db-4d17-8ae1-ece05190dfa3" class="">
+</p><h2 id="dcf3e915-0b92-42ca-b35d-d5714726e38d" class="">RENAME TABLE</h2><p id="8e834a5e-46e3-4b95-8b2f-2fd2ceaab9bd" class="">command: <code>php artisan make:migration rename_profiles</code></p><p id="f8f5bdd3-228f-4648-ad4f-4afa3c29eea3" class="">a migration file will be created there with default code</p><ul id="23d6eeb9-7219-4f8f-af69-91f83d44eb45" class="toggle"><li><details open=""><summary>code</summary><pre id="df1d0bf5-ae21-42a6-bfe4-bb403792395f" class="code"><code>&lt;?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        //
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        //
+    }
+};</code></pre></details></li></ul><p id="5c9d5c05-0553-4742-93ad-32963689e31b" class="">now we have to write code to rename it</p><ul id="2750350b-94c5-4c14-acb8-48b12f2e751a" class="toggle"><li><details open=""><summary>code</summary><pre id="dd571444-e336-4f1a-b940-72c08dc8a4c2" class="code"><code>&lt;?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::rename(&#x27;profiles&#x27;, &#x27;new_profiles&#x27;);
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        //
+    }
+};</code></pre></details></li></ul><ul id="013eee39-8927-46d3-895b-98fef49502ae" class="toggle"><li><details open=""><summary>image</summary><figure id="b808c624-b73d-4459-82d9-9e22e6390eeb" class="image"><a href="migration%201bb1a63823e047f689625175392d2c91/Untitled%204.png"><img style="width:353px" src="migration%201bb1a63823e047f689625175392d2c91/Untitled%204.png"/></a></figure></details></li></ul><h2 id="d1e2d613-8d95-41a1-8b5d-081feb523277" class="">DROP TABLE</h2><p id="0ed73b2d-d893-42a9-ba43-cd4f73ba701b" class="">command: <code>php artisan make:migration drop_profiles</code></p><ul id="4f9dcaac-affc-421f-8875-c48aa34ca761" class="toggle"><li><details open=""><summary>default code after migration created</summary><pre id="d43fc4a2-ed1d-449f-bf37-b62172c65111" class="code"><code>&lt;?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        //
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        //
+    }
+};</code></pre></details></li></ul><ul id="907b1b94-4dae-431d-be0b-5965b3e9070d" class="toggle"><li><details open=""><summary>coded code</summary><pre id="afd6c6a9-9f76-4f68-82d7-d959f5387dfa" class="code"><code>&lt;?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::dropIfExists(&#x27;new_profiles&#x27;);
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        //
+    }
+};</code></pre></details></li></ul><p id="cf4edd3a-1ada-4be4-a3f9-811c2a5364df" class="">
+</p><p id="3bbbfb0e-b7aa-40b9-b3a4-a390dfab065d" class="">
+</p><h2 id="6f916bb8-6e1a-4867-b3fc-5bcee4869724" class="">ADD COLUM</h2><p id="1347ed32-8495-434a-b818-70aae91865b3" class="">command: <code>php artisan make:migration add_column_to_profiles</code></p><ul id="c0c73650-fb2d-41e7-bfb7-58ba66b9f1ad" class="toggle"><li><details open=""><summary>default code</summary><pre id="888b80e1-185f-47c6-bda9-5f2111d5a943" class="code"><code>&lt;?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::table(&#x27;profiles&#x27;, function (Blueprint $table) {
+            //
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::table(&#x27;profiles&#x27;, function (Blueprint $table) {
+            //
+        });
+    }
+};</code></pre><p id="caf0b55b-98ae-45b6-a679-1f194eed0018" class="">notice here: Schema::create call hoy nai. just table create hoyeche. artisan intellicence automaticn table k call korce jate kore amra direct update nea kaj korte pari.</p><p id="e7be6d46-06ab-4992-a886-ef56c1f3259f" class="">
+</p></details></li></ul><ul id="ca974582-6726-48ba-a9aa-374a921fe768" class="toggle"><li><details open=""><summary>updated code</summary><pre id="9697584e-c8fc-4cb9-ac47-11ca806c39ff" class="code"><code>&lt;?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::table(&#x27;profiles&#x27;, function (Blueprint $table) {
+            $table-&gt;after(&#x27;name&#x27;, function ($table) {
+                $table-&gt;string(&#x27;email&#x27;)-&gt;unique();
+                $table-&gt;string(&#x27;phone&#x27;)-&gt;nullable();
+            });
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::table(&#x27;profiles&#x27;, function (Blueprint $table) {
+            //
+        });
+    }
+};</code></pre><p id="4eeabfec-fa19-4a41-9abd-b2d94b3c09aa" class="">table then after mane kon column er pore amra column add korte chai. then akta callback function add kore or moddhe ki ki column chai seta add kore dite hobe.</p></details></li></ul><p id="73dfe156-c407-4034-ad96-5f3f7c2b9c22" class=""><code>php artisan migrate</code></p><p id="5897be5e-b27f-43cf-8e53-6388385e0c37" class="">
+</p><p id="0d37c9b8-d427-4273-9d07-94a53e16ab36" class="">
+</p><h2 id="36ad5670-ac8a-4227-ae4d-34022c2e5459" class="">RENAME COLUMN</h2><p id="5e5fbcb9-cd79-4f24-9d44-7983afbe6e4f" class="">rename korte version issue thake so doctrine package install kore nite hobe</p><pre id="81036ba6-a20b-4d97-8c2a-bad4e9127708" class="code"><code>composer require doctrine/dbal</code></pre><p id="e51bb014-2d15-4ebd-9f36-f9ad0bb683e5" class="">command: command: <code>php artisan make:migration rename_column_to_profiles</code></p><blockquote id="f54cc606-114a-42ae-9989-57b1fdc8b782" class="">kon table a column name change korte chai seta dite hobe</blockquote><ul id="3a12fb48-da39-4d91-b646-48f725d28ff6" class="toggle"><li><details open=""><summary>default code</summary><pre id="b68bca9b-767d-4def-9e92-34786b0b6ab4" class="code"><code>&lt;?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::table(&#x27;profiles&#x27;, function (Blueprint $table) {
+            //
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::table(&#x27;profiles&#x27;, function (Blueprint $table) {
+            //
+        });
+    }
+};</code></pre></details></li></ul><ul id="bfb354e9-8b3e-4ac0-953d-3782a03076be" class="toggle"><li><details open=""><summary>image</summary><figure id="583e1462-63de-4842-9125-0d9e746aea63" class="image"><a href="migration%201bb1a63823e047f689625175392d2c91/Untitled%205.png"><img style="width:1135px" src="migration%201bb1a63823e047f689625175392d2c91/Untitled%205.png"/></a></figure></details></li></ul><ul id="e19e523b-2c3b-4754-b125-2241fb315504" class="toggle"><li><details open=""><summary>updated code</summary><pre id="63852f9d-b868-4043-8564-6e781d646119" class="code"><code>&lt;?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::table(&#x27;profiles&#x27;, function (Blueprint $table) {
+            $table-&gt;renameColumn(&#x27;name&#x27;, &#x27;first_name&#x27;);
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::table(&#x27;profiles&#x27;, function (Blueprint $table) {
+            //
+        });
+    }
+};</code></pre></details></li></ul><h2 id="42b6d64a-ecfa-45dd-a6a6-1804f6d15f6e" class="">DROM COLUMN</h2><p id="69b69768-6ecd-4d18-865c-f5502bc4890b" class="">command: command: <code>php artisan make:migration drop_column_from_profiles</code></p><ul id="10e4d23d-bc75-4322-bcda-91f87baf451d" class="toggle"><li><details open=""><summary>default code</summary><pre id="e965e652-3514-4e11-9fd9-cad774d034ec" class="code"><code>&lt;?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::table(&#x27;profiles&#x27;, function (Blueprint $table) {
+            //
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::table(&#x27;profiles&#x27;, function (Blueprint $table) {
+            //
+        });
+    }
+};</code></pre></details></li></ul><ul id="05176b55-cc51-4ae3-8749-73266eea6c5e" class="toggle"><li><details open=""><summary>images</summary><figure id="c0ae092e-6d54-46e9-846c-25709de4c126" class="image"><a href="migration%201bb1a63823e047f689625175392d2c91/Untitled%206.png"><img style="width:1130px" src="migration%201bb1a63823e047f689625175392d2c91/Untitled%206.png"/></a></figure><figure id="9a1c6333-8b1d-4707-945b-159a313d94c6" class="image"><a href="migration%201bb1a63823e047f689625175392d2c91/Untitled%207.png"><img style="width:1130px" src="migration%201bb1a63823e047f689625175392d2c91/Untitled%207.png"/></a></figure></details></li></ul><ul id="4fd2db75-c78e-47aa-a052-7f02eb41f015" class="toggle"><li><details open=""><summary>updated code</summary><pre id="b4885be6-01c8-4d8e-8c09-6f8cf21c44d4" class="code"><code>&lt;?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::table(&#x27;profiles&#x27;, function (Blueprint $table) {
+            $table-&gt;dropColumn(&#x27;first_name&#x27;);
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::table(&#x27;profiles&#x27;, function (Blueprint $table) {
+            //
+        });
+    }
+};</code></pre></details></li></ul><p id="e44b5bd3-1498-44f8-9c9b-154ce37634ca" class="">
+</p><details open=""><summary style="font-weight:600;font-size:1.875em;line-height:1.3;margin:0">FOREIGN KEY CONNECTION STABLISHMINT</summary><div class="indented"><figure id="c512237a-2573-4550-84ea-7269a138a593" class="image"><a href="migration%201bb1a63823e047f689625175392d2c91/Untitled%208.png"><img style="width:393px" src="migration%201bb1a63823e047f689625175392d2c91/Untitled%208.png"/></a></figure><blockquote id="f450e2ae-1682-4298-91c1-d048c8afa4af" class="">user table er emal er sathe profile table er email foreignkey dara connected</blockquote><p id="a91213ca-45c4-4e9e-8c4d-eb2bd3f44324" class="">user table code:</p><pre id="de21f84c-5503-4b03-a3f2-ffdcbb03b08c" class="code"><code>$table-&gt;id();
+$table-&gt;string(&#x27;email&#x27;, 50)-&gt;unique();
+$table-&gt;string(&#x27;otp&#x27;, 10);
+$table-&gt;timestamp(&#x27;created_at&#x27;)-&gt;useCurrent();
+$table-&gt;timestamp(&#x27;updated_at&#x27;)-&gt;useCurrent()-&gt;useCurrentOnUpdate();</code></pre><p id="77ae9b28-0096-4914-a110-e1a5286fb52a" class="">profile table code:</p><pre id="33b24f91-e993-4b9f-a677-b693d4d01489" class="code"><code>$table-&gt;id();
+$table-&gt;string(&#x27;firstName&#x27;,50);
+$table-&gt;string(&#x27;lastName&#x27;,50);
+$table-&gt;string(&#x27;mobile&#x27;,50);
+$table-&gt;string(&#x27;city&#x27;,50);
+$table-&gt;string(&#x27;shippingAddress&#x27;,1000);
+$table-&gt;string(&#x27;email&#x27;,50)-&gt;unique();
+
+// Relationship
+$table-&gt;foreign(&#x27;email&#x27;)-&gt;references(&#x27;email&#x27;)-&gt;on(&#x27;users&#x27;)
+			-&gt;restrictOnDelete()
+			-&gt;cascadeOnUpdate();
+
+$table-&gt;timestamp(&#x27;created_at&#x27;)-&gt;useCurrent();
+$table-&gt;timestamp(&#x27;updated_at&#x27;)-&gt;useCurrent()-&gt;useCurrentOnUpdate();</code></pre><p id="da47bfc4-dbab-425a-a48e-33ad10afed15" class="">
+</p></div></details></div></article><span class="sans" style="font-size:14px;padding-top:2em"><hr/><details open="" style="padding-top:1em"><summary style="font-weight:600;font-size:1.25em;line-height:1.3;margin:0">Inline comments</summary><div class="indented"><div><p style="padding:0.2em"><b>Block text</b>: <mark class="highlight-yellow_background"><mark class="highlight-yellow_background"><strong>profiles</strong></mark></mark></p><ul class="toggle"><li><div><span class="user" style="padding:0.2em"><img src="https://lh3.googleusercontent.com/a-/AOh14Gg06-W5x8KMMRxncPgyX2_y8K4HqgNGxuSwHGOU=s100" class="icon user-icon"/><span><b>sOhan chaudhuree</b> <time style="font-size:0.8em">Nov 16, 2023, 5:54 AM</time></span></span></div><div style="padding:0.2em">current name</div><div style="padding:0.3em"></div></li></ul></div><hr/></div><div class="indented"><div><p style="padding:0.2em"><b>Block text</b>: <mark class="highlight-yellow_background"><mark class="highlight-yellow_background"><strong>new_profiles</strong></mark></mark></p><ul class="toggle"><li><div><span class="user" style="padding:0.2em"><img src="https://lh3.googleusercontent.com/a-/AOh14Gg06-W5x8KMMRxncPgyX2_y8K4HqgNGxuSwHGOU=s100" class="icon user-icon"/><span><b>sOhan chaudhuree</b> <time style="font-size:0.8em">Nov 16, 2023, 5:54 AM</time></span></span></div><div style="padding:0.2em">updated name</div><div style="padding:0.3em"></div></li></ul></div><hr/></div><div class="indented"><div><p style="padding:0.2em"><b>Block text</b>: <mark class="highlight-yellow_background">email</mark></p><ul class="toggle"><li><div><span class="user" style="padding:0.2em"><img src="https://lh3.googleusercontent.com/a-/AOh14Gg06-W5x8KMMRxncPgyX2_y8K4HqgNGxuSwHGOU=s100" class="icon user-icon"/><span><b>sOhan chaudhuree</b> <time style="font-size:0.8em">Nov 16, 2023, 10:15 AM</time></span></span></div><div style="padding:0.2em">local table/profile table er j field er sathe connected</div><div style="padding:0.3em"></div></li></ul></div><hr/></div><div class="indented"><div><p style="padding:0.2em"><b>Block text</b>: <mark class="highlight-yellow_background">email</mark></p><ul class="toggle"><li><div><span class="user" style="padding:0.2em"><img src="https://lh3.googleusercontent.com/a-/AOh14Gg06-W5x8KMMRxncPgyX2_y8K4HqgNGxuSwHGOU=s100" class="icon user-icon"/><span><b>sOhan chaudhuree</b> <time style="font-size:0.8em">Nov 16, 2023, 10:14 AM</time></span></span></div><div style="padding:0.2em">foreign or user table er j field er sathe connected</div><div style="padding:0.3em"></div></li></ul></div><hr/></div><div class="indented"><div><p style="padding:0.2em"><b>Block text</b>: <mark class="highlight-yellow_background">users</mark></p><ul class="toggle"><li><div><span class="user" style="padding:0.2em"><img src="https://lh3.googleusercontent.com/a-/AOh14Gg06-W5x8KMMRxncPgyX2_y8K4HqgNGxuSwHGOU=s100" class="icon user-icon"/><span><b>sOhan chaudhuree</b> <time style="font-size:0.8em">Nov 16, 2023, 10:15 AM</time></span></span></div><div style="padding:0.2em">j table er sathe connected</div><div style="padding:0.3em"></div></li></ul></div><hr/></div></details></span></body></html>

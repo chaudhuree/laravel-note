@@ -1,0 +1,722 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>elequent relationship</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+    margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-interactiveBlue { background-color: rgba(35, 131, 226, .07); }
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-translucentGray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+.select-value-color-pageGlass { background-color: undefined; }
+.select-value-color-washGlass { background-color: undefined; }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="94434e1c-90cf-49fc-8af1-ceff8045240b" class="page sans"><header><h1 class="page-title">elequent relationship</h1><p class="page-description"></p></header><div class="page-body"><figure id="619dea42-b50d-4349-b92a-75f709d40f63" class="image"><a href="elequent%20relationship%2094434e1c90cf49fc8af1ceff8045240b/Untitled.png"><img style="width:1327px" src="elequent%20relationship%2094434e1c90cf49fc8af1ceff8045240b/Untitled.png"/></a></figure><figure id="dd1b5b97-38bb-4046-b233-d37b1e968f8f" class="image"><a href="elequent%20relationship%2094434e1c90cf49fc8af1ceff8045240b/Untitled%201.png"><img style="width:1419px" src="elequent%20relationship%2094434e1c90cf49fc8af1ceff8045240b/Untitled%201.png"/></a></figure><p id="b5ab9735-9960-4f8a-bdbd-20a2e9f9846a" class="">
+</p><ul id="3de67e04-4630-4381-9ba7-6ddd623be44f" class="bulleted-list"><li style="list-style-type:disc">er diagram onujaye parent hocce user and profile hocce child. </li></ul><ul id="8f246f02-0f84-4758-8aed-8011d962c388" class="bulleted-list"><li style="list-style-type:disc">so user has profile</li></ul><ul id="a83a9e03-d1e3-4c04-9f7f-fa42571d726e" class="bulleted-list"><li style="list-style-type:disc">profile belongs to user</li></ul><p id="9906f13e-70b8-424d-bd7e-1f928203c74b" class="">
+</p><blockquote id="a5c12ce1-b1fc-4a37-9b40-2733b87aaeb7" class="">so amra age migration kore model gulo create kore nibo. 
+amader model gulo hobe jothakrome,
+- User - Profile - Post - Comment - Tag - PostTag</blockquote><p id="a114fdbc-8b45-4df4-ba7c-5fe5ca7855d5" class="">akhn amra jokhn relationship establish korbo tokhn amader model a jaite hobe.</p><h1 id="d7610dff-eab7-4028-b9f6-a2d2ad97b096" class=""><mark class="highlight-orange"><span style="border-bottom:0.05em solid">One to One</span></mark></h1><h2 id="0650efe6-fd0b-4d07-ad4b-2ce0865ec9f2" class="">parent to child relationship</h2><p id="621264c9-b4f1-4145-b396-be8e534e62a6" class="">
+</p><p id="50437277-54b4-4687-a20e-c9f4d6532bba" class="">jemon amra user model a gelam. aikhane User table er sathe profile table er has relation ase. so relation establish korte amader ai relation ship ta model a bole dea ashte hobe</p><ul id="9b209105-28de-47b4-8775-f54ae0433287" class="toggle"><li><details open=""><summary>User model</summary><figure id="3015d55f-daf9-42d0-bab5-cbfd0357f5cb" class="image"><a href="elequent%20relationship%2094434e1c90cf49fc8af1ceff8045240b/Untitled%202.png"><img style="width:432px" src="elequent%20relationship%2094434e1c90cf49fc8af1ceff8045240b/Untitled%202.png"/></a></figure><p id="01b213da-9c9f-420e-83ab-d70604c04b19" class="">inside model we will create a function named profile and code inside this(pic er code a aktu vul ase. right code niche.)</p><pre id="519e2d2b-31fe-4857-8ce4-6a6a58c9f3c7" class="code"><code>// inside User model
+function profile(){
+	return $this -&gt; hasOne(Profile::class);
+}</code></pre></details></li></ul><p id="0e6119a3-97d5-49b3-85ff-99e21a0c39c4" class="">akhn jokhn amra controller theke data show koraibo tokhn amader jevabe data query korte hobe.</p><ul id="ee57d9f7-18d4-4682-ba50-2fd646261de8" class="toggle"><li><details open=""><summary>controller code</summary><ul id="aa7b6e42-0903-40cd-9edc-81c4e52f7a2f" class="toggle"><li><details open=""><summary>image</summary><figure id="4cdc3016-6f27-456a-b231-bd89333be639" class="image"><a href="elequent%20relationship%2094434e1c90cf49fc8af1ceff8045240b/Untitled%203.png"><img style="width:616px" src="elequent%20relationship%2094434e1c90cf49fc8af1ceff8045240b/Untitled%203.png"/></a></figure></details></li></ul><ul id="cb0a7174-8561-402e-8623-2adf47727154" class="toggle"><li><details open=""><summary>code</summary><pre id="efd1e199-9032-4822-8fee-a63ae3367959" class="code"><code>return User::get(); 
+// aita dile amader user table er sob data ashbe 
+// but sekhane profile details tahkbe na.</code></pre><pre id="607ddd0b-f659-4de6-a1e3-89201d3175d2" class="code"><code>// akhn amra jodi chai user er data thakbe sathe profile er data thakbe then,
+return User::with(&#x27;profile&#x27;)-&gt;get();</code></pre></details></li></ul></details></li></ul><hr id="584b3ba5-450b-4d54-84c6-f3e75962f6d6"/><h2 id="e73fa59d-e9b5-4db1-95b2-b9a6b5c427ec" class="">now child theke relation build up korte gele. </h2><p id="b1f0bf1f-6faf-4c3b-8183-7e28b4d9a716" class="">mane , profile model er sathe user model er relation establih korte chaile</p><ul id="556644d5-2773-4ea8-893b-4697390fa2e8" class="toggle"><li><details open=""><summary>Profile model</summary><figure id="fa174c6e-aebd-4d35-8844-6640dfefad48" class="image"><a href="elequent%20relationship%2094434e1c90cf49fc8af1ceff8045240b/Untitled%204.png"><img style="width:384px" src="elequent%20relationship%2094434e1c90cf49fc8af1ceff8045240b/Untitled%204.png"/></a></figure><pre id="8a3074ca-a1a8-4176-b063-2661541757b6" class="code"><code>function user(){
+  return $this -&gt; belongsTo(User::class);
+}</code></pre></details></li></ul><ul id="9e8d1b44-8101-4900-8289-b8ed55f488fd" class="toggle"><li><details open=""><summary>now profile er data query kore ante chaile</summary><ul id="c6567510-cb06-47ed-8d78-f6dde715d6b9" class="toggle"><li><details open=""><summary>image</summary><figure id="ade23d98-d100-4df5-ace2-7edea76dd251" class="image"><a href="elequent%20relationship%2094434e1c90cf49fc8af1ceff8045240b/Untitled%205.png"><img style="width:336px" src="elequent%20relationship%2094434e1c90cf49fc8af1ceff8045240b/Untitled%205.png"/></a></figure></details></li></ul><pre id="836b4ab8-a5e3-49ae-9f07-b6faafaa61d5" class="code"><code>// Profile er data get korte chaile,
+function DemoAction(){
+	return Profile::get();
+}</code></pre><ul id="f9712a55-0dc4-45f1-b027-384ed67fb72a" class="toggle"><li><details open=""><summary>result will be</summary><p id="37c4d20d-84e0-49e2-a674-5c724ec08e6b" class="">just profile er data ase user er data ashe nai.</p><figure id="f53dd7b5-61d8-4742-b889-b36b7c2fba5a" class="image"><a href="elequent%20relationship%2094434e1c90cf49fc8af1ceff8045240b/Untitled%206.png"><img style="width:1066px" src="elequent%20relationship%2094434e1c90cf49fc8af1ceff8045240b/Untitled%206.png"/></a></figure></details></li></ul><p id="3aa59ce5-c1fb-48f6-a06b-498e459b1049" class="">if we want to get user data as well</p><pre id="049ded06-c82d-4774-ae60-e352b8e3c4ac" class="code"><code>
+function DemoAction(){
+	return Profile::with(&#x27;user&#x27;)get();
+}</code></pre><ul id="cb0e513d-f515-41f6-8339-772917dcb37b" class="toggle"><li><details open=""><summary>result</summary><figure id="8f2c13ba-bae1-4223-8b84-facd8f6ed9bd" class="image"><a href="elequent%20relationship%2094434e1c90cf49fc8af1ceff8045240b/Untitled%207.png"><img style="width:1012px" src="elequent%20relationship%2094434e1c90cf49fc8af1ceff8045240b/Untitled%207.png"/></a></figure><p id="03891036-4edd-425d-9bd9-e741a61bf676" class=""><strong>profile gulo to paboi sathe user field name a field create hoye oitay user er data o ashbe.</strong></p></details></li></ul></details></li></ul><p id="0813ad1d-56f9-4727-a7c2-f56be709fa23" class="">
+</p><p id="591639e1-3d42-4f1b-b908-9e1abdd3f3b6" class="">
+</p><h1 id="096ada43-d717-42f4-924e-76c598184883" class=""><mark class="highlight-pink"><span style="border-bottom:0.05em solid">One to Many</span></mark></h1><p id="2e7ebec1-6fa7-44f9-b61d-bb390dd3cc51" class="">
+</p><p id="95347940-9c06-4e83-8df6-159df6a1247f" class="">aibar user er sathe post er relationship</p><ul id="06c58443-8c7f-4bdd-8ed6-7a0a7b25bf8b" class="bulleted-list"><li style="list-style-type:disc">user create hoyeche age then post create korce</li></ul><ul id="c9ad7a8e-f2c0-4ce2-b07d-efde2cbde813" class="bulleted-list"><li style="list-style-type:disc">user → parent, post→ client</li></ul><ul id="1c8c397d-64b6-413b-8da1-3741bea1294b" class="bulleted-list"><li style="list-style-type:disc">one user can create many post → one to many relationship</li></ul><p id="77c06eee-63e9-4b08-8204-f6709769af0f" class="">
+</p><h2 id="9f68675e-27db-4704-89a0-f489288c4b07" class="">parent to child</h2><ul id="4cf330c2-9e23-4e73-b500-4dbb962d468d" class="toggle"><li><details open=""><summary>model(User)</summary><ul id="3515e61a-3376-4949-bac6-e54c7bb0d3c0" class="toggle"><li><details open=""><summary>image</summary><figure id="ca65558a-7360-445a-a2eb-18c30ee57481" class="image"><a href="elequent%20relationship%2094434e1c90cf49fc8af1ceff8045240b/Untitled%208.png"><img style="width:384px" src="elequent%20relationship%2094434e1c90cf49fc8af1ceff8045240b/Untitled%208.png"/></a></figure></details></li></ul><pre id="c7156896-643d-4bab-8796-49bb723f8878" class="code"><code>class User extends Model{
+	function profile(){
+		return $this-&gt;hasOne(Profile::class);
+	}
+	function post(){
+		return $this-&gt;hasMany(Post::class);
+	}
+}</code></pre></details></li></ul><ul id="c6d19850-f46f-41e5-9bfd-28319b8666a3" class="toggle"><li><details open=""><summary>controller</summary><ul id="333b2313-b9f1-4406-a426-dfdd4d8106a9" class="toggle"><li><details open=""><summary>image</summary><figure id="db3f620c-bb5f-474f-b156-6e2dbc346c2e" class="image"><a href="elequent%20relationship%2094434e1c90cf49fc8af1ceff8045240b/Untitled%209.png"><img style="width:288px" src="elequent%20relationship%2094434e1c90cf49fc8af1ceff8045240b/Untitled%209.png"/></a></figure></details></li></ul><ul id="8380fdf3-1cb7-4f4c-a2a5-d7e5d5fa2184" class="toggle"><li><details open=""><summary>code</summary><pre id="e9854da3-c673-47c5-85ad-55a12f3ca44f" class="code"><code>return User::with(&#x27;post&#x27;)-&gt;get()</code></pre></details></li></ul><ul id="6580a87a-bef3-4861-bd57-ee5a1ac4ac2e" class="toggle"><li><details open=""><summary>result</summary><figure id="55ef25b8-0b97-4545-8b8d-cca9f5cae74f" class="image"><a href="elequent%20relationship%2094434e1c90cf49fc8af1ceff8045240b/Untitled%2010.png"><img style="width:288px" src="elequent%20relationship%2094434e1c90cf49fc8af1ceff8045240b/Untitled%2010.png"/></a></figure></details></li></ul></details></li></ul><h2 id="e0c6b85f-174c-4d90-82c4-5ccc86e44eb3" class="">child to parent</h2><ul id="98777a70-7e37-4080-b9ac-09e2f770430a" class="toggle"><li><details open=""><summary>model(Post)</summary><ul id="5292a821-8983-408b-b652-a7ba32fc6a05" class="toggle"><li><details open=""><summary>image</summary><figure id="81eda69e-35e9-42e5-af75-9a19440cdd43" class="image"><a href="elequent%20relationship%2094434e1c90cf49fc8af1ceff8045240b/Untitled%2011.png"><img style="width:336px" src="elequent%20relationship%2094434e1c90cf49fc8af1ceff8045240b/Untitled%2011.png"/></a></figure></details></li></ul><ul id="a177dc4d-ec68-41c2-9454-a12b73a736d6" class="toggle"><li><details open=""><summary>code</summary><pre id="3542bcb7-f2b8-493b-be4c-89a65963fb87" class="code"><code>function user(){
+	return $this-&gt;belongsto(User::class);
+}</code></pre></details></li></ul></details></li></ul><ul id="2b8fa44b-78d4-4d14-b2ad-f2f948a083bb" class="toggle"><li><details open=""><summary>controller</summary><ul id="84b5950e-e6f0-4681-9c42-75975a270361" class="toggle"><li><details open=""><summary>code</summary><pre id="397af9ab-932b-4198-a176-fe7867bc204f" class="code"><code>return Post::with(&#x27;user&#x27;)-&gt;get();</code></pre></details></li></ul><ul id="f8085008-bf8b-4af9-9f68-de961a2b2031" class="toggle"><li><details open=""><summary>result</summary><figure id="378a5274-d4e8-41d6-81dc-730f4d235795" class="image"><a href="elequent%20relationship%2094434e1c90cf49fc8af1ceff8045240b/Untitled%2012.png"><img style="width:993px" src="elequent%20relationship%2094434e1c90cf49fc8af1ceff8045240b/Untitled%2012.png"/></a></figure></details></li></ul></details></li></ul><hr id="0d39ff33-eaa3-4493-a79f-0c6f048d8530"/><p id="bc87a854-d8bd-46d1-822a-51d3f636111c" class="">
+</p><p id="67fe68c6-555d-4433-a444-196637261d80" class="">
+</p><h1 id="ad698a7e-f5fb-4f80-a589-3d85177d4188" class=""><mark class="highlight-blue"><span style="border-bottom:0.05em solid"><strong>Many to Many</strong></span></mark></h1><p id="af168706-939f-4ada-bdde-9de63921905c" class="">post table post_tag table er maddhome tag table er sathe connected. </p><ul id="d33d2fe7-7905-47b0-89d8-ac3e02f539d6" class="bulleted-list"><li style="list-style-type:disc">so post table er sathe tag table er akta many to many relationship ase.</li></ul><figure id="32a7588f-d505-44cb-a3b1-1289f66a2a2c" class="image"><a href="elequent%20relationship%2094434e1c90cf49fc8af1ceff8045240b/Untitled%2013.png"><img style="width:1330px" src="elequent%20relationship%2094434e1c90cf49fc8af1ceff8045240b/Untitled%2013.png"/></a></figure><ul id="84c8fe63-e04c-4003-bdc8-f4b87a2288bb" class="toggle"><li><details open=""><summary>model (Post)</summary><ul id="c219e2ca-7134-4d0a-aefd-a79e7e53fa46" class="toggle"><li><details open=""><summary>image</summary><figure id="09bd0a15-5914-4998-977b-0d5e6dd0ad74" class="image"><a href="elequent%20relationship%2094434e1c90cf49fc8af1ceff8045240b/Untitled%2014.png"><img style="width:1050px" src="elequent%20relationship%2094434e1c90cf49fc8af1ceff8045240b/Untitled%2014.png"/></a></figure></details></li></ul><pre id="c6fac8c0-ad56-4704-ab36-4fd350da71a1" class="code"><code>class Post extends Model{
+		function user(){
+			return $this-&gt;belongsTo(User::class);	
+		}
+		
+		function user(){
+			return $this-&gt;belongsToMany(Tag::class,&#x27;post_tags&#x27;);
+											// kon model er sathe connection, kontar via hoye connection	
+		}
+}</code></pre></details></li></ul><ul id="cbc42136-4e78-4df3-85b6-b0c7b53ea8fa" class="toggle"><li><details open=""><summary>ultota moedel (Tag)</summary><ul id="9b460db2-0ca0-45d7-a518-0a00b9de51b3" class="toggle"><li><details open=""><summary>image</summary><figure id="14534dbc-6f0f-438b-a14e-c553cd7d935c" class="image"><a href="elequent%20relationship%2094434e1c90cf49fc8af1ceff8045240b/Untitled%2015.png"><img style="width:1064px" src="elequent%20relationship%2094434e1c90cf49fc8af1ceff8045240b/Untitled%2015.png"/></a></figure></details></li></ul><pre id="c0f81dfe-471b-48c9-b935-5df853c6348a" class="code"><code>function post(){
+	return $this-&gt;belongsToMany(Post::class,&#x27;post_tags&#x27;);
+}</code></pre></details></li></ul><p id="28e0a442-ddf5-4b1c-9dcb-d4a2ddfc6a92" class="">
+</p><ul id="fb3c5b55-963c-4782-ac18-8f6103281fb8" class="toggle"><li><details open=""><summary>controller</summary><ul id="7cc7032d-e17d-4e83-930f-afa14c2f4804" class="toggle"><li><details open=""><summary>image</summary><figure id="d6f6232b-854f-44ec-b8fe-b079a6aac00c" class="image"><a href="elequent%20relationship%2094434e1c90cf49fc8af1ceff8045240b/Untitled%2016.png"><img style="width:336px" src="elequent%20relationship%2094434e1c90cf49fc8af1ceff8045240b/Untitled%2016.png"/></a></figure></details></li></ul><pre id="dfa80b71-6fd8-4752-974c-34453e6cb643" class="code"><code>return Post::with(&#x27;tag&#x27;)-&gt;get();</code></pre><ul id="cdfdeec9-b03c-4466-a8c2-fb3db25abb87" class="toggle"><li><details open=""><summary>result</summary><figure id="ad2a2645-5ce2-485c-a8ad-1e382f538989" class="image"><a href="elequent%20relationship%2094434e1c90cf49fc8af1ceff8045240b/Untitled%2017.png"><img style="width:968px" src="elequent%20relationship%2094434e1c90cf49fc8af1ceff8045240b/Untitled%2017.png"/></a></figure></details></li></ul></details></li></ul><ul id="256e3a2d-5e1a-4088-ab7a-7836d5c1a3dd" class="toggle"><li><details open=""><summary>controller from tag</summary><pre id="e4280d9b-3e54-4ef9-9581-b4efc8880b60" class="code"><code>return Tag::with(&#x27;post&#x27;)-&gt;get();</code></pre><ul id="d48637c6-0a83-4658-a2ae-8a42e5776bae" class="toggle"><li><details open=""><summary>result</summary><figure id="01b2b84e-220f-49ee-abb2-1a4fabe15a44" class="image"><a href="elequent%20relationship%2094434e1c90cf49fc8af1ceff8045240b/Untitled%2018.png"><img style="width:1410px" src="elequent%20relationship%2094434e1c90cf49fc8af1ceff8045240b/Untitled%2018.png"/></a></figure></details></li></ul></details></li></ul><hr id="fb408c4a-e51f-4697-b37b-87d315e8b5bf"/><figure id="8bd26f7d-7b8a-4657-be55-830b1c57e226" class="image"><a href="elequent%20relationship%2094434e1c90cf49fc8af1ceff8045240b/Untitled%2019.png"><img style="width:1384px" src="elequent%20relationship%2094434e1c90cf49fc8af1ceff8045240b/Untitled%2019.png"/></a></figure></div></article><span class="sans" style="font-size:14px;padding-top:2em"><hr/><details open="" style="padding-top:1em"><summary style="font-weight:600;font-size:1.25em;line-height:1.3;margin:0">Inline comments</summary><div class="indented"><div><p style="padding:0.2em"><b>Block text</b>: <mark class="highlight-yellow_background">profile</mark></p><ul class="toggle"><li><div><span class="user" style="padding:0.2em"><img src="https://lh3.googleusercontent.com/a-/AOh14Gg06-W5x8KMMRxncPgyX2_y8K4HqgNGxuSwHGOU=s100" class="icon user-icon"/><span><b>sOhan chaudhuree</b> <time style="font-size:0.8em">Nov 18, 2023, 4:27 AM</time></span></span></div><div style="padding:0.2em">model a j function ta dea ashci oita dea dibo</div><div style="padding:0.3em"></div></li></ul></div><hr/></div></details></span></body></html>

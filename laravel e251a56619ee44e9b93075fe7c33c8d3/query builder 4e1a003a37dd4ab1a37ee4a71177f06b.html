@@ -1,0 +1,871 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>query builder</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+    margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-interactiveBlue { background-color: rgba(35, 131, 226, .07); }
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-translucentGray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+.select-value-color-pageGlass { background-color: undefined; }
+.select-value-color-washGlass { background-color: undefined; }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="4e1a003a-37dd-4ab1-a37e-e4a71177f06b" class="page sans"><header><h1 class="page-title">query builder</h1><p class="page-description"></p></header><div class="page-body"><p id="2b43f459-d125-4cdf-877e-9712abc24461" class="">
+</p><p id="437ab29f-65de-412f-ab63-ebd059b6feca" class="">create a database in the phpmyadmin and add this database name in the laravel env variable.</p><p id="2498111e-c376-4b98-8183-d80e1d6c060b" class="">sql: create a db in phymyadmin named “craftshop”. then import this sql in the db. and add laravel env this db name.</p><figure id="570745eb-9809-477f-9615-f6c9478980e7"><div class="source"><a href="query%20builder%204e1a003a37dd4ab1a37ee4a71177f06b/craftshop.sql">craftshop.sql</a></div></figure><hr id="6691d599-8f1d-4c65-865e-9cca842d9bad"/><ul id="a91c9a76-8c94-45be-901d-a77cbf5de890" class="toggle"><li><details open=""><summary>retriving all data</summary><ul id="45e2077d-ae32-4194-b6f2-fee98eb9eb6e" class="toggle"><li><details open=""><summary>image</summary><figure id="2332870f-e956-498a-9ee1-ba381ab11495" class="image"><a href="query%20builder%204e1a003a37dd4ab1a37ee4a71177f06b/Untitled.png"><img style="width:862px" src="query%20builder%204e1a003a37dd4ab1a37ee4a71177f06b/Untitled.png"/></a></figure></details></li></ul><pre id="eeeb86a3-dad7-4132-91a0-7e0bd846827d" class="code"><code>&lt;?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB; // this thing need to be imported
+
+class queryprac extends Controller
+{
+    function demoAction()
+    {
+        $products = DB::table(&#x27;products&#x27;)-&gt;get();
+        return $products;
+    }
+}</code></pre></details></li></ul><ul id="c0590195-ae10-4799-bdf4-ff067b73045b" class="toggle"><li><details open=""><summary>retriving single row</summary><ul id="955aca94-4eea-49ad-b09f-92a362c63c7f" class="toggle"><li><details open=""><summary>image</summary><figure id="bf06e06c-3a1f-40cf-ba71-e4df8f691eb1" class="image"><a href="query%20builder%204e1a003a37dd4ab1a37ee4a71177f06b/Untitled%201.png"><img style="width:384px" src="query%20builder%204e1a003a37dd4ab1a37ee4a71177f06b/Untitled%201.png"/></a></figure></details></li></ul><ul id="e06ba370-d880-4fec-8fc1-80532f729dc7" class="toggle"><li><details open=""><summary>code</summary><pre id="db45d324-39c4-42a8-afe4-3ebc617535f2" class="code"><code>function demoAction()
+    {
+        $products = DB::table(&#x27;products&#x27;)-&gt;first();
+        return $products;
+    }</code></pre><pre id="8bde718b-1814-46c4-9ffd-1477a627fb5d" class="code"><code>function demoAction()
+    {
+        $products = DB::table(&#x27;products&#x27;)-&gt;find(1);
+        return $products;
+    }</code></pre></details></li></ul></details></li></ul><ul id="8bbec200-56a0-4e36-a8a1-306a5d320e2c" class="toggle"><li><details open=""><summary>retriving specific column(pluck)</summary><ul id="3c235f48-8397-41ef-97d8-0384beb5375e" class="toggle"><li><details open=""><summary>image</summary><figure id="6221bb3d-55ec-4714-b1cc-ed9eece97e5a" class="image"><a href="query%20builder%204e1a003a37dd4ab1a37ee4a71177f06b/Untitled%202.png"><img style="width:1663px" src="query%20builder%204e1a003a37dd4ab1a37ee4a71177f06b/Untitled%202.png"/></a></figure></details></li></ul><ul id="84bcd436-3709-4728-ae9d-4ff004fce31a" class="toggle"><li><details open=""><summary>code</summary><pre id="c183091a-418a-4cce-b7ef-3287900b1cf0" class="code"><code>function demoAction()
+    {
+        $products = DB::table(&#x27;products&#x27;)-&gt;pluck(&#x27;price&#x27;);
+        return $products;
+    }
+// if we see the the result we will get array of data</code></pre><pre id="f184f0ef-86a6-4057-a130-f9dd08fceb9a" class="code"><code>function demoAction()
+    {
+        $products = DB::table(&#x27;products&#x27;)-&gt;pluck(&#x27;title&#x27;, &#x27;id&#x27;);
+        return $products;
+    }
+// but for multiple field we will get object of data.</code></pre><ul id="d1bf1daa-6400-4708-95e2-2949b77d20d3" class="toggle"><li><details open=""><summary>result</summary><div id="759c920a-e0a4-4298-8516-a257fbb72af1" class="column-list"><div id="dd9c485c-5e58-49c6-ae98-0e8d702f6ca2" style="width:50%" class="column"><figure id="5946ecd3-e28b-4d1f-ac62-2c8861d11f34" class="image"><a href="query%20builder%204e1a003a37dd4ab1a37ee4a71177f06b/Untitled%203.png"><img style="width:84px" src="query%20builder%204e1a003a37dd4ab1a37ee4a71177f06b/Untitled%203.png"/></a></figure><p id="430a5526-690c-4051-8117-a86d1a016317" class="">
+</p></div><div id="ec6e7ad2-462d-4edb-b559-81741c0c4eac" style="width:50%" class="column"><figure id="2357a647-dd4f-45e1-bfe4-e3dd3c8f4084" class="image"><a href="query%20builder%204e1a003a37dd4ab1a37ee4a71177f06b/Untitled%204.png"><img style="width:192px" src="query%20builder%204e1a003a37dd4ab1a37ee4a71177f06b/Untitled%204.png"/></a></figure><p id="31dfa2f2-5da1-41bb-8ab8-bc9d8d3bff66" class="">
+</p></div></div></details></li></ul><p id="caf88720-a7c3-4e80-9ded-84de5c6e94c0" class="">
+</p></details></li></ul></details></li></ul><ul id="3e207448-5e37-4bc8-95ae-f90585128f09" class="toggle"><li><details open=""><summary>aggregate</summary><ul id="603c2a75-687b-4e73-a0c0-29fd6cdde2da" class="toggle"><li><details open=""><summary>image</summary><figure id="1e8d3dc6-e409-4aa9-a4bc-28323c13e4b4" class="image"><a href="query%20builder%204e1a003a37dd4ab1a37ee4a71177f06b/Untitled%205.png"><img style="width:1254px" src="query%20builder%204e1a003a37dd4ab1a37ee4a71177f06b/Untitled%205.png"/></a></figure></details></li></ul><ul id="fe9bc00c-b99d-43f7-920a-e8cda5655443" class="toggle"><li><details open=""><summary>code</summary><pre id="383934ad-0921-4a64-8a94-c4c259e06452" class="code"><code>function demoAction()
+    {
+        $count = DB::table(&#x27;products&#x27;)-&gt;count();
+        $max = DB::table(&#x27;products&#x27;)-&gt;max(&#x27;price&#x27;);
+        $avg = DB::table(&#x27;products&#x27;)-&gt;avg(&#x27;price&#x27;);
+        $min = DB::table(&#x27;products&#x27;)-&gt;min(&#x27;price&#x27;);
+        $sum = DB::table(&#x27;products&#x27;)-&gt;sum(&#x27;price&#x27;);
+        return [&#x27;count&#x27; =&gt; $count, &#x27;max&#x27; =&gt; $max, &#x27;avg&#x27; =&gt; $avg, 
+								&#x27;min&#x27; =&gt; $min, &#x27;sum&#x27; =&gt; $sum];
+    }</code></pre><ul id="529a964b-5c6f-4d4d-96d7-c25a8d060631" class="toggle"><li><details open=""><summary>result</summary><figure id="b53416cf-f439-4555-b009-7d0204fbc70e" class="image"><a href="query%20builder%204e1a003a37dd4ab1a37ee4a71177f06b/Untitled%206.png"><img style="width:288px" src="query%20builder%204e1a003a37dd4ab1a37ee4a71177f06b/Untitled%206.png"/></a></figure></details></li></ul></details></li></ul></details></li></ul><ul id="8212b448-3235-4d23-b2d1-92ddbbbf0f74" class="toggle"><li><details open=""><summary>select clouse → (pluck a object akare ashe. select a array of object akare data ashe)</summary><ul id="cd01149f-f3e2-4c55-97ad-9286834f3d99" class="toggle"><li><details open=""><summary>image</summary><figure id="7bee584d-8e39-4df6-ab10-c09564526324" class="image"><a href="query%20builder%204e1a003a37dd4ab1a37ee4a71177f06b/Untitled%207.png"><img style="width:480px" src="query%20builder%204e1a003a37dd4ab1a37ee4a71177f06b/Untitled%207.png"/></a></figure></details></li></ul><ul id="fee1156d-343f-4b9b-bb36-084794b74521" class="toggle"><li><details open=""><summary>code</summary><pre id="a228154a-95c6-4c14-aeb7-de691829a6cb" class="code"><code>function demoAction()
+    {
+        $products = DB::table(&#x27;products&#x27;)-&gt;select(&#x27;title&#x27;, &#x27;price&#x27;)-&gt;get();
+        return $products;
+    }</code></pre><ul id="3b216ebb-5ea1-4cda-9ac9-570465b64305" class="toggle"><li><details open=""><summary>result</summary><figure id="6aeb5997-4257-4dd0-b9be-e60aff60766d" class="image"><a href="query%20builder%204e1a003a37dd4ab1a37ee4a71177f06b/Untitled%208.png"><img style="width:288px" src="query%20builder%204e1a003a37dd4ab1a37ee4a71177f06b/Untitled%208.png"/></a></figure></details></li></ul></details></li></ul></details></li></ul><hr id="1093b396-9fdf-4f31-b8bd-66c6d421ff47"/><figure id="3450eaf2-6e9b-4d81-9943-31fc454f097b" class="link-to-page"><a href="query%20builder%204e1a003a37dd4ab1a37ee4a71177f06b/join%203450eaf26e9b4d81994331fc454f097b.html">join</a></figure><hr id="6cd1b581-e7cb-4c73-9783-9db512c29eef"/><figure id="3402c1f8-a798-4647-83aa-3cd9e22be4ee" class="link-to-page"><a href="query%20builder%204e1a003a37dd4ab1a37ee4a71177f06b/where%203402c1f8a798464783aa3cd9e22be4ee.html">where</a></figure><hr id="8771c041-c9d1-438c-a87a-5e4693525354"/><h2 id="821422d3-f985-423d-af49-23d1bc54b76b" class="">Ordering, Grouping, Limit</h2><ul id="57cd0012-b5b7-4ad1-b020-58c89b47ea29" class="toggle"><li><details open=""><summary>main functions</summary><figure id="45219a94-e30f-410b-8e6c-acfa5a39e24a" class="image"><a href="query%20builder%204e1a003a37dd4ab1a37ee4a71177f06b/Untitled%209.png"><img style="width:1239px" src="query%20builder%204e1a003a37dd4ab1a37ee4a71177f06b/Untitled%209.png"/></a></figure></details></li></ul><ul id="7c136e08-b32a-4e03-a5b1-6948a577c24c" class="toggle"><li><details open=""><summary>diffrent use cases</summary><figure id="fbd69ea8-e0ff-486a-9c0a-f9add741b59f" class="image"><a href="query%20builder%204e1a003a37dd4ab1a37ee4a71177f06b/Untitled%2010.png"><img style="width:1308px" src="query%20builder%204e1a003a37dd4ab1a37ee4a71177f06b/Untitled%2010.png"/></a></figure><div id="7af3b4d3-f70e-49ee-b616-775a54f7e76a" class="column-list"><div id="3033f593-6cc5-4c58-9f98-4388f06c3698" style="width:50%" class="column"><p id="bf55d987-edf8-44dc-a794-c42782f1dbac" class="">order by brandName in descending order. we can apply asc for ascending order.</p></div><div id="93a72b7b-210e-4f48-9a46-6e2a5a15236b" style="width:50%" class="column"><p id="37042e0d-2f49-4602-8e7f-08fb6886966f" class="">inRandomOrder dile data akekbar akek order a ashbe. aikhane first call kora hoyeche so just akta data ashbe but ekekbar akekta data ashbe.</p></div></div><figure id="af4e5899-cfe0-4a19-ac91-ac88158b6f7e" class="image"><a href="query%20builder%204e1a003a37dd4ab1a37ee4a71177f06b/Untitled%2011.png"><img style="width:1305px" src="query%20builder%204e1a003a37dd4ab1a37ee4a71177f06b/Untitled%2011.png"/></a></figure><div id="fba3ac96-44a5-49ed-be02-2b2b6ab0d6aa" class="column-list"><div id="5302c4de-f041-4997-9d07-876a1d6fdda3" style="width:50%" class="column"><p id="75180c0d-74bc-47ad-abc3-9bb78e7b5de5" class="">latest order a data ashbe. mane last a j data insert kora hoyece seta age thakbe</p></div><div id="7ee7d802-444d-4b4c-8ec0-a13ea3388a9c" style="width:50%" class="column"><p id="e80d1468-6bd6-4072-9dc2-322c1b6a0be7" class="">akdom surute j data insert kora hoyeche oi order a ashbe</p></div></div><figure id="fc221e6f-d17e-42b0-86a4-6f3f9923c0af" class="image"><a href="query%20builder%204e1a003a37dd4ab1a37ee4a71177f06b/Untitled%2012.png"><img style="width:764px" src="query%20builder%204e1a003a37dd4ab1a37ee4a71177f06b/Untitled%2012.png"/></a></figure><p id="5ebf4259-aa72-4d28-8761-0cf7a06d69f5" class="">
+</p><figure id="832e8382-76c2-4331-adf0-65e0eba8219c" class="image"><a href="query%20builder%204e1a003a37dd4ab1a37ee4a71177f06b/Untitled%2013.png"><img style="width:1309px" src="query%20builder%204e1a003a37dd4ab1a37ee4a71177f06b/Untitled%2013.png"/></a></figure><blockquote id="5c30afe2-e4df-46df-9760-c87682611694" class=""><mark class="highlight-red_background"><strong>mysql a group by korte gea majhe majhe jahmela kore. er karon hocce config file a strict mode true kora thake. so group by use korte amader ai strict mode false kore dite hobe.</strong></mark></blockquote><ul id="0334150f-2f0e-421a-bf24-ea085a4cc5d1" class="toggle"><li><details open=""><summary>fix</summary><figure id="3c6b4994-43fc-4153-9fa8-21989a161762" class="image"><a href="query%20builder%204e1a003a37dd4ab1a37ee4a71177f06b/Untitled%2014.png"><img style="width:1659px" src="query%20builder%204e1a003a37dd4ab1a37ee4a71177f06b/Untitled%2014.png"/></a></figure></details></li></ul><ul id="c450b753-aca2-408a-96dc-c1838bdaa6bc" class="toggle"><li><details open=""><summary>description of the uppoer code</summary><div id="a8dc91ae-cb51-47d6-b6dd-bf61c979868b" class="column-list"><div id="3c7d87a6-cbf8-4f82-9d9f-3af7bf608538" style="width:100%" class="column"><p id="1100bb19-61c4-4940-a9bc-cca97ebc8ac1" class="">groupBy ashole data gulo k analysis kore . then j field er jonne data ta query kora hoyeche oi field er koto dhoroner data ase oigulo k alada kore fele. then oi alada data gulor moddhe theke akta data show kore. aivabe protita alada datar gruop er akta kore data show kore.</p></div><div id="0e6c81f0-5274-482f-bd68-11214e99e1d0" style="width:100%" class="column"><p id="4c084352-d4f5-43d8-ba6c-e7ea8f25d89a" class=""><strong><span style="border-bottom:0.05em solid">having ta where er moto kaj kore</span></strong></p><p id="daab997c-e5ae-4390-8bc8-ede5cace5244" class="">condition onujaie first a groupBy hobe. then logical AND operator er moto kaj kobe having ta and aita where er moto second logic add kore then query data pathabe.</p><p id="ea79713e-9c90-4836-b6e3-ba882da380e0" class="">like ai query tay, price er vittite group kobe. suppose 4 ta group hoice. 20,2000,6000,8000. then aita porer condition a jabe and 5000 er uporer group er data show korbe.mane ai khetre 2ta data pabo.</p><p id="76414da7-bdfe-4331-b187-804101ced3e5" class="">
+</p></div></div></details></li></ul><p id="e15780eb-c0c8-4eed-b2fb-dc66295ee383" class="">
+</p><p id="fcc1edba-3523-4b05-bc94-cb67fafbd869" class="">
+</p></details></li></ul><hr id="f038c83d-8482-4f33-a155-91d2a19c8d35"/><h2 id="582fbeb6-6271-47fa-bb8f-71c258908ddd" class="">INSERT , UPDATE, DELETE, UPSERT (CRUD)</h2><ul id="ac87683d-ec2e-417f-ba76-1da0179d496f" class="toggle"><li><details open=""><summary>insert</summary><ul id="6e3d750a-8399-4cae-b16c-a45457c7c124" class="toggle"><li><details open=""><summary>image</summary><figure id="07f47dd7-07d4-46d1-a410-ccea0945ca75" class="image"><a href="query%20builder%204e1a003a37dd4ab1a37ee4a71177f06b/Untitled%2015.png"><img style="width:1052px" src="query%20builder%204e1a003a37dd4ab1a37ee4a71177f06b/Untitled%2015.png"/></a></figure><p id="c479ef4d-2599-4381-8090-4c6cbb7be675" class="">
+</p></details></li></ul><p id="e088eb52-d8e2-4ff3-a1ad-fcd775545c8d" class="">insert method k call kore associative array akare data dile oita insert hoye jabe.</p><blockquote id="f93b03e0-0af7-4f7a-9d4e-c91878c08472" class="">real life scenerio. post method dea data send korle seta kivabe add kore dibo.</blockquote><p id="8ae2fd82-96ef-473c-8ee5-5c92837e2e87" class=""><span style="border-bottom:0.05em solid"><strong>aikhane important thing is , amra font end ba postman dea json akare data pathay dilei hobe.oita kintu backend a laravel a automatic associative array te convert hoye jabe. </strong></span></p><p id="5a270264-c284-4c86-9e4b-7f0b842686df" class=""><mark class="highlight-orange"><em><strong>example:</strong></em></mark></p><ul id="7cf46766-1eb5-439e-9252-2e99660383b1" class="toggle"><li><details open=""><summary>controller</summary><ul id="dc403c50-7708-4621-b173-baf7827f7e7d" class="toggle"><li><details open=""><summary>image</summary><figure id="3290b6e2-c406-4079-9566-c4f1e377cd47" class="image"><a href="query%20builder%204e1a003a37dd4ab1a37ee4a71177f06b/Untitled%2016.png"><img style="width:834px" src="query%20builder%204e1a003a37dd4ab1a37ee4a71177f06b/Untitled%2016.png"/></a></figure></details></li></ul><ul id="cc93b5c0-8339-4606-9c24-ee975043e7f1" class="toggle"><li><details open=""><summary>code</summary><pre id="e6e9eeef-99d2-4830-9fed-d5187069fa26" class="code"><code>function DemoAction(Request $request) {
+    $result = DB::table(&#x27;brands&#x27;)
+        -&gt;insert($request-&gt;input());
+    return $result;
+}</code></pre></details></li></ul><p id="fc367175-9466-4555-8780-cf383155522b" class="">result : kintu successfully data enter complete hoile 1 dibe. mane true. real life case a amra toast message dibo.</p></details></li></ul><ul id="ae8744c8-581f-4608-9fa6-892d1f8c745a" class="toggle"><li><details open=""><summary>postman data send demo</summary><blockquote id="9547b305-f9bf-4e33-8f21-fa7120f33bb1" class="">database a column name ja ase tai dite hobe json data field er key te nahole data insert hobe na. and niche dekhai jasse j result 1 ashce. mane successfully inserted hoyeche.</blockquote><figure id="5df49bd1-1adb-4916-9af4-fdd16a792785" class="image"><a href="query%20builder%204e1a003a37dd4ab1a37ee4a71177f06b/Untitled%2017.png"><img style="width:1046px" src="query%20builder%204e1a003a37dd4ab1a37ee4a71177f06b/Untitled%2017.png"/></a></figure></details></li></ul><p id="06785960-8e94-44cd-b488-f7cc040d1937" class="">akhn jodi amon hoy j amra database er column name er moto kore key data bind kore dibo na. like brandName er jaygay name and brandImg er jaygay img field dea data pathaici tokhn ki korbo amra request→ input() method call kore associative array er moddhe data dea data insert kore felbo.</p><ul id="1df3f796-11de-48f9-aa8a-cf9d602d87d5" class="toggle"><li><details open=""><summary>code</summary><ul id="d331af09-0061-4be1-a215-579f2d94886b" class="toggle"><li><details open=""><summary>image</summary><figure id="3ca1d0f7-bfe0-4362-9acb-967580ff115e" class="image"><a href="query%20builder%204e1a003a37dd4ab1a37ee4a71177f06b/Untitled%2018.png"><img style="width:856px" src="query%20builder%204e1a003a37dd4ab1a37ee4a71177f06b/Untitled%2018.png"/></a></figure><p id="f2a06301-6c40-46c4-a005-66efa62d9cbd" class="">
+</p></details></li></ul><pre id="2b24279e-ff9d-454c-aa6f-1c6f44810467" class="code"><code>function DemoAction(Request $request) {
+    $result = DB::table(&#x27;brands&#x27;)
+        -&gt;insert([
+            &#x27;brandName&#x27; =&gt; $request-&gt;input(&#x27;name&#x27;),
+            &#x27;brandImg&#x27; =&gt; $request-&gt;input(&#x27;img&#x27;)
+        ]);
+
+    return $result;
+}</code></pre></details></li></ul></details></li></ul><ul id="f84039cc-f97d-41bc-b9a2-b854eea3a0f6" class="toggle"><li><details open=""><summary>update</summary><figure id="812e6d73-fdd9-4d8c-bb96-6717acf8d6a1" class="image"><a href="query%20builder%204e1a003a37dd4ab1a37ee4a71177f06b/Untitled%2019.png"><img style="width:815px" src="query%20builder%204e1a003a37dd4ab1a37ee4a71177f06b/Untitled%2019.png"/></a></figure></details></li></ul><ul id="cf5f55a0-8754-4e6e-b7c4-6ed85fc75915" class="toggle"><li><details open=""><summary>upsert</summary><figure id="4340e85e-a85b-47c8-88bf-5462512b01fe" class="image"><a href="query%20builder%204e1a003a37dd4ab1a37ee4a71177f06b/Untitled%2020.png"><img style="width:1341px" src="query%20builder%204e1a003a37dd4ab1a37ee4a71177f06b/Untitled%2020.png"/></a></figure></details></li></ul><ul id="2ae9b1ae-26d9-4edd-96da-f52b81d43a80" class="toggle"><li><details open=""><summary>increment or decrement</summary><figure id="3ff53796-e486-4a08-a564-af745e87324f" class="image"><a href="query%20builder%204e1a003a37dd4ab1a37ee4a71177f06b/Untitled%2021.png"><img style="width:1123px" src="query%20builder%204e1a003a37dd4ab1a37ee4a71177f06b/Untitled%2021.png"/></a></figure></details></li></ul><ul id="e04a669a-02d9-4b78-919f-aeb12318f639" class="toggle"><li><details open=""><summary>delete single data or entire table(truncate)</summary><figure id="ead68d77-06f7-4c48-8639-98631ef6ea7d" class="image"><a href="query%20builder%204e1a003a37dd4ab1a37ee4a71177f06b/Untitled%2022.png"><img style="width:1312px" src="query%20builder%204e1a003a37dd4ab1a37ee4a71177f06b/Untitled%2022.png"/></a></figure></details></li></ul><p id="aa76f54b-6fdb-4367-a76f-ebfb52f4c50d" class="">
+</p><hr id="0cec3b70-6752-40f3-a276-c32d5d24827c"/><ul id="da0adcf8-f39b-44c6-b53d-098e0b41eb30" class="toggle"><li><details open=""><summary>pagination</summary><pre id="d094a672-231c-488c-9da5-6bb9bf9e8eb1" class="code"><code>function DemoAction() {
+    $affected = DB::table(&#x27;products&#x27;)
+        -&gt;simplePaginate(2);
+    return $affected;
+}</code></pre><ul id="02dd9adb-a1c5-41c3-be3d-b490adf441f3" class="toggle"><li><details open=""><summary>result</summary><figure id="62d4c530-e147-46cb-b650-15e36de03736" class="image"><a href="query%20builder%204e1a003a37dd4ab1a37ee4a71177f06b/Untitled%2023.png"><img style="width:1677px" src="query%20builder%204e1a003a37dd4ab1a37ee4a71177f06b/Untitled%2023.png"/></a></figure></details></li></ul><p id="2363ba15-e5a0-4503-98eb-eb344f89c891" class=""><em><strong>below code is for more detaild pagination</strong></em></p><p id="36b6506b-c8c5-4e33-9851-ddad3c0b4e0d" class=""><em><strong>it will provide link url as well.</strong></em></p><figure id="8dae115a-a357-4162-979a-1da497360520" class="image"><a href="query%20builder%204e1a003a37dd4ab1a37ee4a71177f06b/Untitled%2024.png"><img style="width:1294px" src="query%20builder%204e1a003a37dd4ab1a37ee4a71177f06b/Untitled%2024.png"/></a></figure><ul id="22bb1ccb-4fa0-4e4f-aeeb-d437d0b1f60f" class="toggle"><li><details open=""><summary>result</summary><pre id="c6f857e5-bdf4-4f08-8ca2-46897cbfcc41" class="code"><code>{
+    &quot;current_page&quot;: 1,
+    &quot;data&quot;: [
+        {
+            &quot;id&quot;: 1,
+            &quot;title&quot;: &quot;New Year Special Shoe&quot;,
+            &quot;short_des&quot;: &quot;Reference site about Lorem Ipsum, giving information on its \r\norigins, as well as a random Lipsum generator Reference site \r\nabout Lorem Ipsum, giving information on its origins, as well as \r\na random Lipsum generator&quot;,
+            &quot;price&quot;: &quot;2000&quot;,
+            &quot;discount&quot;: 0,
+            &quot;discount_price&quot;: &quot;0&quot;,
+            &quot;image&quot;: &quot;https://photo.teamrabbil.com/images/2023/04/04/product.png&quot;,
+            &quot;stock&quot;: 1,
+            &quot;star&quot;: 4.8,
+            &quot;remark&quot;: &quot;popular&quot;,
+            &quot;category_id&quot;: 3,
+            &quot;brand_id&quot;: 3,
+            &quot;created_at&quot;: &quot;2023-02-19 20:08:12&quot;,
+            &quot;updated_at&quot;: &quot;2023-04-05 01:25:04&quot;
+        },
+        {
+            &quot;id&quot;: 2,
+            &quot;title&quot;: &quot;New Year Special Shoe&quot;,
+            &quot;short_des&quot;: &quot;Reference site about Lorem Ipsum, giving information on its \r\norigins, as well as a random Lipsum generator Reference site \r\nabout Lorem Ipsum, giving information on its origins, as well as \r\na random Lipsum generator&quot;,
+            &quot;price&quot;: &quot;2000&quot;,
+            &quot;discount&quot;: 0,
+            &quot;discount_price&quot;: &quot;0&quot;,
+            &quot;image&quot;: &quot;https://photo.teamrabbil.com/images/2023/04/04/product.png&quot;,
+            &quot;stock&quot;: 1,
+            &quot;star&quot;: 4.8,
+            &quot;remark&quot;: &quot;popular&quot;,
+            &quot;category_id&quot;: 3,
+            &quot;brand_id&quot;: 3,
+            &quot;created_at&quot;: &quot;2023-02-19 20:08:12&quot;,
+            &quot;updated_at&quot;: &quot;2023-04-05 01:25:04&quot;
+        }
+    ],
+    &quot;first_page_url&quot;: &quot;http://127.0.0.1:8000/queryprac?page=1&quot;,
+    &quot;from&quot;: 1,
+    &quot;last_page&quot;: 14,
+    &quot;last_page_url&quot;: &quot;http://127.0.0.1:8000/queryprac?page=14&quot;,
+    &quot;links&quot;: [
+        {
+            &quot;url&quot;: null,
+            &quot;label&quot;: &quot;&amp;laquo; Previous&quot;,
+            &quot;active&quot;: false
+        },
+        {
+            &quot;url&quot;: &quot;http://127.0.0.1:8000/queryprac?page=1&quot;,
+            &quot;label&quot;: &quot;1&quot;,
+            &quot;active&quot;: true
+        },
+        {
+            &quot;url&quot;: &quot;http://127.0.0.1:8000/queryprac?page=2&quot;,
+            &quot;label&quot;: &quot;2&quot;,
+            &quot;active&quot;: false
+        },
+        {
+            &quot;url&quot;: &quot;http://127.0.0.1:8000/queryprac?page=3&quot;,
+            &quot;label&quot;: &quot;3&quot;,
+            &quot;active&quot;: false
+        },
+        {
+            &quot;url&quot;: &quot;http://127.0.0.1:8000/queryprac?page=4&quot;,
+            &quot;label&quot;: &quot;4&quot;,
+            &quot;active&quot;: false
+        },
+        {
+            &quot;url&quot;: &quot;http://127.0.0.1:8000/queryprac?page=5&quot;,
+            &quot;label&quot;: &quot;5&quot;,
+            &quot;active&quot;: false
+        },
+        {
+            &quot;url&quot;: &quot;http://127.0.0.1:8000/queryprac?page=6&quot;,
+            &quot;label&quot;: &quot;6&quot;,
+            &quot;active&quot;: false
+        },
+        {
+            &quot;url&quot;: &quot;http://127.0.0.1:8000/queryprac?page=7&quot;,
+            &quot;label&quot;: &quot;7&quot;,
+            &quot;active&quot;: false
+        },
+        {
+            &quot;url&quot;: &quot;http://127.0.0.1:8000/queryprac?page=8&quot;,
+            &quot;label&quot;: &quot;8&quot;,
+            &quot;active&quot;: false
+        },
+        {
+            &quot;url&quot;: &quot;http://127.0.0.1:8000/queryprac?page=9&quot;,
+            &quot;label&quot;: &quot;9&quot;,
+            &quot;active&quot;: false
+        },
+        {
+            &quot;url&quot;: &quot;http://127.0.0.1:8000/queryprac?page=10&quot;,
+            &quot;label&quot;: &quot;10&quot;,
+            &quot;active&quot;: false
+        },
+        {
+            &quot;url&quot;: null,
+            &quot;label&quot;: &quot;...&quot;,
+            &quot;active&quot;: false
+        },
+        {
+            &quot;url&quot;: &quot;http://127.0.0.1:8000/queryprac?page=13&quot;,
+            &quot;label&quot;: &quot;13&quot;,
+            &quot;active&quot;: false
+        },
+        {
+            &quot;url&quot;: &quot;http://127.0.0.1:8000/queryprac?page=14&quot;,
+            &quot;label&quot;: &quot;14&quot;,
+            &quot;active&quot;: false
+        },
+        {
+            &quot;url&quot;: &quot;http://127.0.0.1:8000/queryprac?page=2&quot;,
+            &quot;label&quot;: &quot;Next &amp;raquo;&quot;,
+            &quot;active&quot;: false
+        }
+    ],
+    &quot;next_page_url&quot;: &quot;http://127.0.0.1:8000/queryprac?page=2&quot;,
+    &quot;path&quot;: &quot;http://127.0.0.1:8000/queryprac&quot;,
+    &quot;per_page&quot;: 2,
+    &quot;prev_page_url&quot;: null,
+    &quot;to&quot;: 2,
+    &quot;total&quot;: 27
+}</code></pre></details></li></ul></details></li></ul></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

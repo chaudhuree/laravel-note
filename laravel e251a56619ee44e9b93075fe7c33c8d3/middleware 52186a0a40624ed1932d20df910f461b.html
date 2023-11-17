@@ -1,0 +1,758 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>middleware</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+    margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-interactiveBlue { background-color: rgba(35, 131, 226, .07); }
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-translucentGray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+.select-value-color-pageGlass { background-color: undefined; }
+.select-value-color-washGlass { background-color: undefined; }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="52186a0a-4062-4ed1-932d-20df910f461b" class="page sans"><header><h1 class="page-title">middleware</h1><p class="page-description"></p></header><div class="page-body"><pre id="24aae699-dae9-4589-881a-bcb335049ced" class="code"><code>php artisan make:middleware demoMiddleware</code></pre><p id="ce89be74-2ab3-4f44-b100-716c1bf66268" class=""> created directory: <code>app&gt;Http&gt;middleware&gt;DemoMiddleware.php</code></p><figure id="f2f2d0bf-a98f-426c-8cc0-272d97a73bb7" class="image"><a href="middleware%2052186a0a40624ed1932d20df910f461b/Untitled.png"><img style="width:288px" src="middleware%2052186a0a40624ed1932d20df910f461b/Untitled.png"/></a></figure><p id="dbca73a5-29ae-4f74-9b8f-df95fb8a9fee" class="">
+</p><blockquote id="176ac67a-4e6b-4985-9549-d754b651ba63" class="">middlware request er header,body,params and cookies nea kaj korte pare and response er header ,body, cookies k manipulate korte pare. aita controller er age execute hoy. security check e muloto er main purpose.</blockquote><p id="e5ca4fdd-e2a0-40ec-bdb7-c46e9d6875a9" class="">
+</p><h3 id="ff2ddd1a-56b6-41d5-bc5c-bdae33a3d11e" class="">after creating middleware we can attach this with route like this</h3><ul id="8393ea8e-f788-4d37-9302-e46790ddc540" class="toggle"><li><details open=""><summary>image</summary><figure id="75f18cdf-b4ca-4107-9ef3-7672081cf657" class="image"><a href="middleware%2052186a0a40624ed1932d20df910f461b/Untitled%201.png"><img style="width:1364px" src="middleware%2052186a0a40624ed1932d20df910f461b/Untitled%201.png"/></a></figure></details></li></ul><ul id="9b3bcd79-181b-48e7-9091-c20431d26ffd" class="toggle"><li><details open=""><summary>code</summary><pre id="3691c944-6d89-4186-9782-15ab698b5fa0" class="code"><code>&lt;?php
+
+use App\Http\Controllers\DemoController;
+use App\Http\Middleware\DemoMiddleware; // import
+use Illuminate\Support\Facades\Route;
+
+Route::get(&#x27;/&#x27;, function () {
+    return view(&#x27;welcome&#x27;);
+});
+
+Route::post(&#x27;/demo&#x27;, [DemoController::class, &#x27;demoAction&#x27;])-&gt;middleware([DemoMiddleware::class]);</code></pre></details></li></ul><h3 id="2fb9c1fd-0b51-4474-b273-89df25a88349" class="">how to code in middleware</h3><ul id="764123f0-b3e7-43ed-a610-136146d36e6b" class="toggle"><li><details open=""><summary>image</summary><blockquote id="46c80a06-21b7-4340-83ce-b1de295444f2" class="">this code defines, amra header dea akta key pass korbo. key er value ta middleware a check kora hobe. value match korle take controller e pathano hobe otherwise amra take return kore dibo with unauthorized text and 401 code</blockquote><figure id="edb533e6-aa0f-470e-91eb-0de272d86536" class="image"><a href="middleware%2052186a0a40624ed1932d20df910f461b/Untitled%202.png"><img style="width:576px" src="middleware%2052186a0a40624ed1932d20df910f461b/Untitled%202.png"/></a></figure></details></li></ul><ul id="27d51970-94b6-41d2-ab0a-57d0cda91b9c" class="toggle"><li><details open=""><summary>code</summary><div id="6cc49165-65b6-4540-97e0-ce377387f437" class="column-list"><div id="c7a0ec86-b0f0-4626-912e-f66136a9cff2" style="width:43.75%" class="column"><figure id="8fa618ab-e4b7-4112-99c4-16592baa6e67" class="image" style="text-align:center"><a href="middleware%2052186a0a40624ed1932d20df910f461b/Untitled%203.png"><img style="width:384px" src="middleware%2052186a0a40624ed1932d20df910f461b/Untitled%203.png"/></a><figcaption>with right key</figcaption></figure></div><div id="2893836a-2feb-42a3-a3fa-1881358ce5b4" style="width:56.25%" class="column"><figure id="11df9c90-d453-4be8-9188-6414f124ba17" class="image" style="text-align:center"><a href="middleware%2052186a0a40624ed1932d20df910f461b/Untitled%204.png"><img style="width:384px" src="middleware%2052186a0a40624ed1932d20df910f461b/Untitled%204.png"/></a><figcaption>with wrong key</figcaption></figure></div></div><pre id="b2960f0b-8885-48b8-9643-883cec7c6a3c" class="code"><code>&lt;?php
+
+namespace App\Http\Middleware;
+
+use Closure;
+use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
+
+class DemoMiddleware
+{
+    public function handle(Request $request, Closure $next): Response
+    {
+        if($request-&gt;header(&#x27;apikey&#x27;)===&#x27;123xyz&#x27;){
+            return $next($request);
+        }
+        return response()-&gt;json([&#x27;message&#x27;=&gt;&#x27;Unauthorized&#x27;], 401);
+    }
+}</code></pre><p id="b9f5d0be-13bf-467f-864a-736aa3ac8cc8" class="">we can also redirect user from the middleware</p><pre id="7da33664-2d66-4995-93cb-4e433544adb2" class="code"><code>&lt;?php
+
+namespace App\Http\Middleware;
+
+use Closure;
+use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
+
+class DemoMiddleware
+{
+    public function handle(Request $request, Closure $next): Response
+    {
+        if($request-&gt;header(&#x27;apikey&#x27;)===&#x27;123xyz&#x27;){
+            return $next($request);
+        }
+        return redirect(&quot;/&quot;);
+    }
+}</code></pre></details></li></ul><p id="08306e49-ab3c-48b2-8e8b-38121b800038" class="">
+</p><h3 id="388458ce-70c9-4ffe-a533-a9718c70aa72" class="">apply middleware  for route group</h3><ul id="9315c83b-23fc-45c0-bc27-96a86863e941" class="bulleted-list"><li style="list-style-type:disc">akta middleware create kore nilam named: <code>CheckRequestDetails</code></li></ul><ul id="313c0809-5d0c-44d8-972a-c15e9e2c4ba0" class="bulleted-list"><li style="list-style-type:disc">then oi middleware ta k <code>app&gt;http&gt;karnel.php</code> er middleware er <code><em>protected</em></code><code> $middlewareAliases = []</code> ai array er moddhe kye value pair er moto kore attatch kore dibo</li></ul><ul id="388e071d-7676-4649-97db-ae8806ecfeec" class="bulleted-list"><li style="list-style-type:disc">then dhorlam amra koyekta controller action create korlam, <code>DemoAction1</code>, <code>DemoAction1</code></li></ul><ul id="d0bf738a-9487-4cf9-af42-866d5b7de7e8" class="bulleted-list"><li style="list-style-type:disc">then amra akta router group create korlam sekhane middleware add korbo array er moddhe(jey key dea middleware ta create kore ashci karnel a oita aikhane add kore dibo ) and then group er moddhe route gulo add kore dibo.</li></ul><ul id="83685d7b-5746-4a0e-9fb1-11457cb28705" class="toggle"><li><details open=""><summary>group middleware apply syntax</summary><pre id="e0aeb6aa-c9ee-4a17-9cb3-59feb86638ca" class="code"><code>Route::middleware([&#x27;middleware 1&#x27;,&#x27;middleware 2&#x27;])-&gt;group(function(){
+	Route::get(&#x27;/demo1&#x27;, [DemoController::class, &#x27;demoAction1&#x27;]);
+	Route::post(&#x27;/demo2&#x27;, [DemoController::class, &#x27;demoAction2&#x27;]);
+})</code></pre></details></li></ul><ul id="42eec851-508c-4de4-b1ba-c0196e2151c3" class="toggle"><li><details open=""><summary>CheckRequestDetails middleware</summary><pre id="c2c016a7-cd17-4bf8-a837-28bf881bd4c6" class="code"><code>class CheckRequestDetails
+{
+    public function handle(Request $request, Closure $next): Response
+    {
+        if($request-&gt;header(&#x27;apikey&#x27;)===&#x27;123xyz&#x27;){
+            return $next($request);
+        }
+        return response()-&gt;json([&#x27;message&#x27;=&gt;&#x27;Unauthorized&#x27;], 401);
+    }
+}</code></pre></details></li></ul><ul id="d017be08-6678-4e3f-b283-a781ca0152f6" class="toggle"><li><details open=""><summary>image</summary><ol type="1" id="f0e875a2-ab6c-400e-94c4-177040c1a995" class="numbered-list" start="1"><li>adding <code>CheckRequestDetails</code> middleware to the karnel file<figure id="9a832e4a-7718-4d5e-885f-232b83a8f13b" class="image"><a href="middleware%2052186a0a40624ed1932d20df910f461b/Untitled%205.png"><img style="width:624px" src="middleware%2052186a0a40624ed1932d20df910f461b/Untitled%205.png"/></a></figure></li></ol><ol type="1" id="35d414fc-28b1-433a-8543-f654b4d5452b" class="numbered-list" start="2"><li>adding middleware to the route group<figure id="a01c8248-2020-4ec2-a038-f8cb588cf938" class="image"><a href="middleware%2052186a0a40624ed1932d20df910f461b/Untitled%206.png"><img style="width:1019px" src="middleware%2052186a0a40624ed1932d20df910f461b/Untitled%206.png"/></a></figure></li></ol></details></li></ul><p id="4380565b-9480-48d8-a713-5974ed660001" class="">
+</p><p id="d2dc0bf5-5d82-4fdb-af37-4582e9f0cfb3" class="">
+</p><h3 id="a21481fc-5a16-49ca-90a2-b72c49f3e05a" class="">apply middleware to the whole app</h3><p id="b62fef98-0aa0-499e-9fc7-5b83caeeb008" class=""><code>CheckRequestDetails</code> ai name a akta middleware create korlam and then aitake whole app a add korte chaiteci. </p><p id="2c82bec3-bfda-4ca1-b4e2-dffc6e68ead5" class="">amader app&gt; http&gt; karnel.php file a aita middleware group a add kore dite hobe.</p><ul id="2d03fe12-6f09-4828-b670-09df1a81b77f" class="toggle"><li><details open=""><summary>middleware</summary><pre id="aa228026-9773-4342-929c-f059e566dcb9" class="code"><code>class CheckRequestDetails
+{
+    public function handle(Request $request, Closure $next): Response
+    {
+        if($request-&gt;header(&#x27;apikey&#x27;)===&#x27;123xyz&#x27;){
+            return $next($request);
+        }
+        return response()-&gt;json([&#x27;message&#x27;=&gt;&#x27;Unauthorized&#x27;], 401);
+    }
+}</code></pre></details></li></ul><ul id="383a8573-220d-4239-ad2e-3e9e75182d8d" class="toggle"><li><details open=""><summary>default middleware group in the karnel file</summary><figure id="6fee158c-d6d4-4a99-99b8-76c52b4cb1f4" class="image"><a href="middleware%2052186a0a40624ed1932d20df910f461b/Untitled%207.png"><img style="width:528px" src="middleware%2052186a0a40624ed1932d20df910f461b/Untitled%207.png"/></a></figure></details></li></ul><ul id="577da967-c917-4ff7-bc94-66bb9f4ec70b" class="toggle"><li><details open=""><summary>after adding middleware to the group the code become</summary><figure id="23467291-170b-425c-b4c4-13fefdb0b57a" class="image"><a href="middleware%2052186a0a40624ed1932d20df910f461b/Untitled%208.png"><img style="width:528px" src="middleware%2052186a0a40624ed1932d20df910f461b/Untitled%208.png"/></a></figure></details></li></ul><p id="856d9a8c-d9cd-490b-b90f-5ff1a1465062" class="">
+</p><h3 id="4ba0839d-94a4-4664-b62c-43b94740ca28" class="">request manipulate</h3><ul id="140d1277-6d55-4dd4-a900-d02f7e2d16c6" class="toggle"><li><details open=""><summary>add header</summary><pre id="b2d0ea72-3a06-44b7-ac5f-8e850eabd4c5" class="code"><code>class DemoMiddleware
+{
+    public function handle(Request $request, Closure $next): Response
+    {
+        // Perform action
+            $request-&gt;headers-&gt;add([&#x27;email&#x27; =&gt; &#x27;chaudhuree@gmail.com&#x27;]);
+            return $next($request);
+        
+    }
+}</code></pre></details></li></ul><ul id="8c55bb7c-1cee-48bd-8ef9-ff6c7bfefb28" class="toggle"><li><details open=""><summary>replace header</summary><pre id="a7982cee-2f24-4740-8c62-21e740dcc3f9" class="code"><code>$request-&gt;headers-&gt;replace([&#x27;email&#x27; =&gt; &#x27;changed@gmail.com&#x27;]);</code></pre></details></li></ul><ul id="a4ba9aec-8e0a-41bd-9b3b-d4b698e62f21" class="toggle"><li><details open=""><summary>remove</summary><pre id="87b262f6-6dee-474f-b389-af5cce8b451b" class="code"><code>$request-&gt;headers-&gt;remove(&#x27;email&#x27;);</code></pre></details></li></ul><p id="46df88b9-16f4-4447-a7bb-73c3f3fd94bf" class="">
+</p><p id="5eac5876-899b-4c93-8525-6b3fd1ed3198" class="">
+</p><h3 id="d5aea3a8-041c-4430-b70f-753d8d5f59e8" class="">rate limit</h3><p id="d1dbd9be-e672-43d2-a1ee-680ac6361239" class="">5,1 mean 1 minute a max 5 ta request accept korbe then error dibe too many request</p><p id="df20751c-b6b1-4870-aade-e6e5a19bf0bf" class="">60,1 mean 1 minute a max 60</p><ul id="93905562-574b-405f-a7fc-9b8a67849f81" class="bulleted-list"><li style="list-style-type:disc">build in middleware asi just use korte hobe</li></ul><ul id="1d529dd2-384c-45af-8c92-12ed8e8bc66b" class="toggle"><li><details open=""><summary>for single route</summary><figure id="2c16ef47-863e-4cac-9337-583445ae1c31" class="image"><a href="middleware%2052186a0a40624ed1932d20df910f461b/Untitled%209.png"><img style="width:1362px" src="middleware%2052186a0a40624ed1932d20df910f461b/Untitled%209.png"/></a></figure></details></li></ul><ul id="865b807d-aad7-4dbd-b821-e3dc1114ec23" class="toggle"><li><details open=""><summary>applying in the whole app</summary><figure id="d51a58ed-7cc7-4775-8745-4156ebbcf03a" class="image"><a href="middleware%2052186a0a40624ed1932d20df910f461b/Untitled%2010.png"><img style="width:1180px" src="middleware%2052186a0a40624ed1932d20df910f461b/Untitled%2010.png"/></a></figure></details></li></ul></div></article><span class="sans" style="font-size:14px;padding-top:2em"><hr/><details open="" style="padding-top:1em"><summary style="font-weight:600;font-size:1.25em;line-height:1.3;margin:0">Inline comments</summary><div class="indented"><div><p style="padding:0.2em"><b>Block text</b>: <mark class="highlight-yellow_background">middleware 1</mark></p><ul class="toggle"><li><div><span class="user" style="padding:0.2em"><img src="https://lh3.googleusercontent.com/a-/AOh14Gg06-W5x8KMMRxncPgyX2_y8K4HqgNGxuSwHGOU=s100" class="icon user-icon"/><span><b>sOhan chaudhuree</b> <time style="font-size:0.8em">Nov 15, 2023, 8:10 PM</time></span></span></div><div style="padding:0.2em">that one added in the karnel</div><div style="padding:0.3em"></div></li></ul></div><hr/></div></details></span></body></html>

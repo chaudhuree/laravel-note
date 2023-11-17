@@ -1,0 +1,764 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>eloquent ORM</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+    margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-interactiveBlue { background-color: rgba(35, 131, 226, .07); }
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-translucentGray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+.select-value-color-pageGlass { background-color: undefined; }
+.select-value-color-washGlass { background-color: undefined; }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="0f5b137a-9afa-4659-8d1b-0b9212b39d78" class="page sans"><header><h1 class="page-title">eloquent ORM</h1><p class="page-description"></p></header><div class="page-body"><p id="ba333ddc-1f59-472f-b3b8-c5ffd6d052a8" class="">
+</p><p id="0372ab5c-1c12-45f6-8ee8-d486a380f5bd" class=""><mark class="highlight-orange_background"><strong>database</strong></mark>: create a databse and import below sql and finally add the name of the database in the laravel env variable. for example db name: CraftBlog, and CraftShop</p><figure id="d24440c0-d702-4526-9576-930b30faa99e"><div class="source"><a href="eloquent%20ORM%200f5b137a9afa46598d1b0b9212b39d78/myblog.sql">myblog.sql</a></div></figure><figure id="9084d53d-5055-49e8-b6be-d9c2338a85c0"><div class="source"><a href="eloquent%20ORM%200f5b137a9afa46598d1b0b9212b39d78/teamrabb_craftybay.sql">teamrabb_craftybay.sql</a></div></figure><p id="6c218af3-903c-4b00-8cf2-29b47f93d072" class="">
+</p><h3 id="2b824247-d162-46bf-aef2-d16cb27e30a8" class="">migration er maddhome amra table create kori. but elequent ORM dea ai table gulo k ak akta model hisebe represent kora hoy.</h3><p id="785f6cec-1191-4977-9a5f-ccf73f9a2a35" class="">command: <code>php artisan make:model modelName</code></p><p id="45cb0f18-2b64-401f-8a2b-4d5f9650b5ce" class="">folder to be found: <code>app &gt; model &gt; inside it</code></p><ul id="d2bed92d-b2c2-4db9-af26-91cda0af3222" class="toggle"><li><details open=""><summary>naming convension</summary><p id="5b089292-53a9-48f2-afd8-bf87a3fa2563" class="">migration kore table create korar time a table er name always plural thakte hobe. like user er akta table hoile setar name rakhte hobe users. product er table hobe products</p><p id="802363bc-a6df-413c-889f-045439968762" class="">but jokhn model create korbo tokhn seta singular form a hobe. like users na, user hobe.products na product hobe.</p><figure id="960beacf-b81c-4cf7-b757-a1ce365a292e" class="image"><a href="eloquent%20ORM%200f5b137a9afa46598d1b0b9212b39d78/Untitled.png"><img style="width:1328px" src="eloquent%20ORM%200f5b137a9afa46598d1b0b9212b39d78/Untitled.png"/></a></figure><blockquote id="06cee043-9647-4cfc-ab39-86b05522ee03" class=""><mark class="highlight-red"><strong>amra jodi naming convention follow na kori</strong></mark></blockquote><figure id="3a3af73a-9e02-4962-b935-d4c637761ddf" class="image"><a href="eloquent%20ORM%200f5b137a9afa46598d1b0b9212b39d78/Untitled%201.png"><img style="width:1453px" src="eloquent%20ORM%200f5b137a9afa46598d1b0b9212b39d78/Untitled%201.png"/></a></figure><p id="c7433f0c-f214-45c8-98a8-9ce8bd66892c" class="">
+</p></details></li></ul><ul id="32a4205b-9b03-4f6d-a541-2660cd0b23e0" class="toggle"><li><details open=""><summary>primary key importance</summary><blockquote id="9bf5d81b-0a53-403e-a929-91548186399c" class="">amader migration table a id name a akta field rakhte hobe. and oita primary key hobe plus auto incrimented hoite hobe. jodi amra primary key er name id bade onno kicu rakhi tokhn amader model a niche code likhe seta bole dite hobe.and auto incremented na hoile setao bole dite hobe.and key type integer bade onno kicu thakle setao bole dite hobe.</blockquote><ul id="5e892c0c-487b-463f-a86b-f7895e0793a4" class="toggle"><li><details open=""><summary>image</summary><figure id="4fe6626b-8ab6-4b4d-8c17-a9624254315a" class="image"><a href="eloquent%20ORM%200f5b137a9afa46598d1b0b9212b39d78/Untitled%202.png"><img style="width:1676px" src="eloquent%20ORM%200f5b137a9afa46598d1b0b9212b39d78/Untitled%202.png"/></a></figure></details></li></ul><ul id="c7058b84-0d2a-4010-8651-c3dbfd711bac" class="toggle"><li><details open=""><summary>code</summary><pre id="6861d2f1-da60-4d05-b9d3-1f1f96380816" class="code"><code>// php artisan make:model Brand howar kotha
+// but amra jodi dei , php artisan make:model MyBrand
+class MyBrand extends Model
+{
+    // Set a custom primary key column name
+    protected $primaryKey = &#x27;brand_id&#x27;;
+
+    // Disable auto-incrementing for the primary key
+    public $incrementing = false;
+
+    // Set the primary key type to string
+    protected $keyType = &#x27;string&#x27;;
+
+    // Define a custom table name, overriding Laravel&#x27;s naming convention
+    protected $table = &#x27;Brands&#x27;;
+}</code></pre></details></li></ul></details></li></ul><ul id="4ba823e2-2fc5-4fd1-83d7-bc5236608656" class="toggle"><li><details open=""><summary>table a created_at and updated_at ai duita field must add kore dite hobe.</summary><figure id="259775a4-208b-4e50-a24c-c58ef2e40942" class="image"><a href="eloquent%20ORM%200f5b137a9afa46598d1b0b9212b39d78/Untitled%203.png"><img style="width:1684px" src="eloquent%20ORM%200f5b137a9afa46598d1b0b9212b39d78/Untitled%203.png"/></a></figure></details></li></ul><ul id="bad29879-3bf1-488f-ad30-84f73fb1af62" class="toggle"><li><details open=""><summary>default value set (database a insert korar time a kono value na dile j value auto add hobe)</summary><figure id="3e3e2a38-c8a9-4531-958c-24c60e90b1be" class="image"><a href="eloquent%20ORM%200f5b137a9afa46598d1b0b9212b39d78/Untitled%204.png"><img style="width:1630px" src="eloquent%20ORM%200f5b137a9afa46598d1b0b9212b39d78/Untitled%204.png"/></a></figure><pre id="eaf4a02c-87b0-4375-b3aa-df2899c410d9" class="code"><code>protected $attributes=[
+	&#x27;brandName&#x27;= &#x27;default name&#x27;,
+	&#x27;brandImg&#x27; = &#x27;default img&#x27;,
+]</code></pre><p id="034fce76-2cf8-4e30-ad1d-9e7567c6d18f" class="">ai part tukur dara model a default value set kore rakha hoy .</p></details></li></ul><ul id="30a467a2-6bdf-435e-99d3-11690c05a75a" class="toggle"><li><details open=""><summary>ecommerce er diagram</summary><figure id="f49e9348-1ce7-499f-b57c-3d77145f7367" class="image"><a href="eloquent%20ORM%200f5b137a9afa46598d1b0b9212b39d78/Untitled%205.png"><img style="width:1125px" src="eloquent%20ORM%200f5b137a9afa46598d1b0b9212b39d78/Untitled%205.png"/></a></figure></details></li></ul><p id="107d50d1-b409-428c-8429-659cc9335d2b" class="">now for the ecommece model: </p><ul id="f829ce10-62f0-4e3f-ad6f-0039f76cefab" class="toggle"><li><details open=""><summary>create model comman:</summary><pre id="8c996811-fca9-4e1c-bed2-ab35e68c0b76" class="code"><code>php artisan make:model Category
+php artisan make:model Product
+php artisan make:model ProductCart
+php artisan make:model ProductDetail
+php artisan make:model ProductSlider
+php artisan make:model ProductWish
+php artisan make:model Profile
+php artisan make:model User
+php artisan make:model Brand</code></pre></details></li></ul><ul id="0aa639ff-eb05-41e2-98ee-ab45f86e4b35" class="toggle"><li><details open=""><summary>insert data</summary><p id="074bf414-404f-4233-93e8-2b25ba24cdd5" class="">suppose Brand model a data insert korteci.</p><ul id="2851b616-d9bb-48bd-b882-0a586cca646c" class="toggle"><li><details open=""><summary>first model a fillable kore property defined kore dite hobe</summary><ul id="aaf3215f-78ee-4311-bfa4-d21400d0c9df" class="toggle"><li><details open=""><summary>image</summary><figure id="aacbbbfa-a38d-4cab-9592-1ebb8aa39447" class="image"><a href="eloquent%20ORM%200f5b137a9afa46598d1b0b9212b39d78/Untitled%206.png"><img style="width:630px" src="eloquent%20ORM%200f5b137a9afa46598d1b0b9212b39d78/Untitled%206.png"/></a></figure></details></li></ul><ul id="e7789bcc-f456-4ab1-83f3-4cbbe3e9ea52" class="toggle"><li><details open=""><summary>code</summary><pre id="568a489a-4cfa-437d-875f-208cab0aac16" class="code"><code>&lt;?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class Brand extends Model
+{
+    protected $fillable = [
+        &#x27;brandName&#x27;, &#x27;brandImg&#x27;
+    ];
+}</code></pre></details></li></ul><p id="d6ea7932-8238-4642-befa-e0851d404afd" class="">
+</p></details></li></ul><ul id="ec3e2eb6-d2e5-4698-bfef-7efac54440c3" class="toggle"><li><details open=""><summary>controller a code korte hobe</summary><ul id="14abb7e0-e6b8-4422-b750-b2900d603cc4" class="toggle"><li><details open=""><summary>image</summary><p id="6981634d-90e9-4ec2-ad24-e931bb358d27" class="">user theke input nicci then insert korteci</p><figure id="69e34678-ce47-4217-a796-563775626415" class="image"><a href="eloquent%20ORM%200f5b137a9afa46598d1b0b9212b39d78/Untitled%207.png"><img style="width:665px" src="eloquent%20ORM%200f5b137a9afa46598d1b0b9212b39d78/Untitled%207.png"/></a></figure></details></li></ul><ul id="6299a372-81a5-4968-ad93-6902957c30c8" class="toggle"><li><details open=""><summary>code</summary><pre id="d11c1c33-ebf9-4961-9498-98bd2b2c8cb2" class="code"><code>&lt;?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Brand;
+use Illuminate\Http\Request;
+
+
+class queryprac extends Controller
+{
+    function DemoAction(Request $request)
+    {
+        return Brand::create($request-&gt;input());
+    }
+}</code></pre></details></li></ul></details></li></ul><ul id="b88186fa-1c71-4a82-8a73-046cde8457c2" class="toggle"><li><details open=""><summary>result</summary><pre id="04bcb41f-84e5-4ada-91e2-38da9fc5961c" class="code"><code>// input
+{
+    &quot;brandName&quot;: &quot;chaudhuree&quot;,
+    &quot;brandImg&quot;: &quot;photoofchaudhuree.jpg&quot;
+}</code></pre><pre id="9bc0d745-bb20-4ece-aadc-4192ac53eec8" class="code"><code>{
+    &quot;brandName&quot;: &quot;chaudhuree&quot;,
+    &quot;brandImg&quot;: &quot;photoofchaudhuree.jpg&quot;,
+    &quot;updated_at&quot;: &quot;2023-11-17T16:20:59.000000Z&quot;,
+    &quot;created_at&quot;: &quot;2023-11-17T16:20:59.000000Z&quot;,
+    &quot;id&quot;: 5
+}</code></pre></details></li></ul><p id="360424fd-7452-47dc-aad5-6e1f1359bac3" class="">
+</p></details></li></ul><ul id="4ad85f45-959a-4865-8110-9b7e2a21851d" class="toggle"><li><details open=""><summary>update data</summary><ul id="c219d684-4002-481c-82af-26a83c465144" class="toggle"><li><details open=""><summary>image</summary><figure id="bfecefd7-ed4d-4e30-8c6f-74cb51e0fca9" class="image"><a href="eloquent%20ORM%200f5b137a9afa46598d1b0b9212b39d78/Untitled%208.png"><img style="width:1340px" src="eloquent%20ORM%200f5b137a9afa46598d1b0b9212b39d78/Untitled%208.png"/></a></figure></details></li></ul><ul id="7986b75e-ad91-4325-8ca7-2f50ebcfe85a" class="toggle"><li><details open=""><summary>code</summary><pre id="1d7dd946-6d47-4e58-8cd7-3bdeeb2e7af2" class="code"><code>class queryprac extends Controller
+{
+    function DemoAction(Request $request)
+    {
+        return Brand::where(&#x27;id&#x27;, $request-&gt;id)-&gt;update($request-&gt;input());
+    }
+}</code></pre></details></li></ul></details></li></ul><ul id="8711f177-c45c-43be-a285-1ffadf50b3db" class="toggle"><li><details open=""><summary>why fillable</summary><p id="97f0680f-ca89-4e94-b7e6-e6366b6e4628" class="">
+There are a few reasons why you might want to use the fillable property in Laravel</p><p id="10387f7f-bd38-49a7-a04b-437e9c5c6f9b" class="">
+Security: It helps protect your application from mass assignment attacks.</p><p id="5be733be-c6bb-4e30-9350-fdb93f1ae5fd" class="">
+Performance: It can improve the performance of your application by reducing the number of fields that need to be checked when mass assigning data.</p><p id="26d84b04-d5cb-4bf2-86fc-254291ad0bb4" class="">
+Readability: It makes your code more readable by explicitly defining which fields can be mass assigned.</p><p id="b92a8c25-e265-48fa-998b-a06bd3dca1ba" class="">
+Consistency: It ensures that all of your models have the same set of fillable fields, which can make your code more
+consistent.</p><p id="5c5035a9-fd64-45b1-9ebe-dc6e688b83de" class="">
+Extensibility: It allows you to easily add or remove fillable fields as your application evolves</p></details></li></ul><ul id="80fdc446-d343-44c0-af4a-ac67fadea202" class="toggle"><li><details open=""><summary>upsert</summary><ul id="c8f89376-9010-4cda-b8fa-80aa2d8e6de0" class="toggle"><li><details open=""><summary>imagee</summary><figure id="fd0ad76c-c6cb-4401-bf93-c3fd91e991f4" class="image"><a href="eloquent%20ORM%200f5b137a9afa46598d1b0b9212b39d78/Untitled%209.png"><img style="width:762px" src="eloquent%20ORM%200f5b137a9afa46598d1b0b9212b39d78/Untitled%209.png"/></a></figure></details></li></ul><ul id="74b6b9da-286b-490c-b902-f78d39348636" class="toggle"><li><details open=""><summary>code</summary><pre id="c5455d76-c5ab-4af0-8685-f2b60b2fd414" class="code"><code>Brand::updateOrCreate(
+    [&#x27;brandName&#x27; =&gt; $request-&gt;brandName],
+    $request-&gt;input() // Assuming you want to update all fields from the request
+);
+
+// Route::post(&#x27;/brand/{brandName}&#x27;)
+// url: http://localhost:8000/brand/Hatil
+// postman or frontend theke baki sob details pathay dibo.</code></pre><p id="eba2f404-d7e8-4fe2-941f-39af4a00656e" class="">brand name jodi database a thake tahole oi data te r ja ja body dea pathano hoyeche ta update hoye jabe.</p><p id="28d19d55-b8f4-4c01-bcfb-e58598aba832" class="">but jodi url er brandname er data dea db te kono item na pawa jay tokhn aita new item create kobe request body dea j data dewa hoyeche oita dea.</p><p id="d95ad08f-c775-498a-9bbf-e8d720b3b298" class="">
+</p><ul id="5701a28b-e1f8-47cc-bf33-03f8aa528252" class="toggle"><li><details open=""><summary>details</summary><figure id="6790d74b-e7a6-4de2-8d7a-95d0b25e4fc5" class="image"><a href="eloquent%20ORM%200f5b137a9afa46598d1b0b9212b39d78/Untitled%2010.png"><img style="width:1034px" src="eloquent%20ORM%200f5b137a9afa46598d1b0b9212b39d78/Untitled%2010.png"/></a></figure><p id="da980245-886d-4f96-b500-f8062f977374" class="">dhorlam amader database a shahrir name a akta brand ase . so akhn jokhn ai body pathabo then korbe ki shahriar name er brand er name change kore kabir kore dibe. it is normal update.</p><p id="a3fbc3ff-0477-45ec-b1da-f8e23dfdc549" class="">but dhorlam shahriar name er brand name db te nei. tokhn kintu ai image er moto data pathaile kono kaj e hobe na. because amader url a search korteci ak brand name dea abr update field a dici r ak name so jehutu update korar kicu nei aita new kicu o create korbe na. cz, dui jaygay dui brand name.</p><ul id="933aac85-2d27-4cad-b45f-386abd3f8f14" class="bulleted-list"><li style="list-style-type:disc">akhn second scenerio chinta kori</li></ul><figure id="850294e4-86fa-4b51-a9dc-919c790dc24e" class="image"><a href="eloquent%20ORM%200f5b137a9afa46598d1b0b9212b39d78/Untitled%2011.png"><img style="width:932px" src="eloquent%20ORM%200f5b137a9afa46598d1b0b9212b39d78/Untitled%2011.png"/></a></figure><p id="fe8a151b-93fe-40cb-9ab1-af1b37ef7b76" class="">aikhane jodi shahriar name a kono brand thake tahole hobe ki oitar brandImg ai body dea pathano image dea update hobe.</p><p id="f131e615-a139-488d-be77-6b1eb16eb7eb" class="">but aikhane jodi shahriar name a kono data na thake so aita shahriar name a akta brandname create korbe and oitar brandImg field a ai image ta boshay dibe.</p></details></li></ul></details></li></ul></details></li></ul><ul id="d58f086f-70fc-4401-974a-fe001f853a81" class="toggle"><li><details open=""><summary>delete</summary><figure id="2d83701d-517b-41cc-9cc3-89fd1dd3244c" class="image"><a href="eloquent%20ORM%200f5b137a9afa46598d1b0b9212b39d78/Untitled%2012.png"><img style="width:833px" src="eloquent%20ORM%200f5b137a9afa46598d1b0b9212b39d78/Untitled%2012.png"/></a></figure></details></li></ul><ul id="fb399dbf-8ecf-42ff-9ab4-7a0f091ce9f1" class="toggle"><li><details open=""><summary>increment decrement</summary><figure id="c0631793-acfe-4047-af90-3e4b5133bd4d" class="image"><a href="eloquent%20ORM%200f5b137a9afa46598d1b0b9212b39d78/Untitled%2013.png"><img style="width:635px" src="eloquent%20ORM%200f5b137a9afa46598d1b0b9212b39d78/Untitled%2013.png"/></a></figure></details></li></ul><ul id="94ee6e5e-5e04-496d-948f-fdcd7c1bf03a" class="toggle"><li><details open=""><summary>retrive all data</summary><figure id="9468b0f2-403c-485e-93b0-713aa7fe342c" class="image"><a href="eloquent%20ORM%200f5b137a9afa46598d1b0b9212b39d78/Untitled%2014.png"><img style="width:1341px" src="eloquent%20ORM%200f5b137a9afa46598d1b0b9212b39d78/Untitled%2014.png"/></a></figure></details></li></ul><ul id="d6e1d7c0-b499-4876-8b4d-90c2fd9525ba" class="toggle"><li><details open=""><summary>retrive single data</summary><figure id="64541a94-5736-4f03-acc8-6c8c33dbcdac" class="image"><a href="eloquent%20ORM%200f5b137a9afa46598d1b0b9212b39d78/Untitled%2015.png"><img style="width:1331px" src="eloquent%20ORM%200f5b137a9afa46598d1b0b9212b39d78/Untitled%2015.png"/></a></figure></details></li></ul><ul id="f400c7dc-ec00-4da8-bc82-7020108c186c" class="toggle"><li><details open=""><summary>retrive list of column value</summary><figure id="b841b002-b5ea-419e-96c2-b52534877bc1" class="image"><a href="eloquent%20ORM%200f5b137a9afa46598d1b0b9212b39d78/Untitled%2016.png"><img style="width:1315px" src="eloquent%20ORM%200f5b137a9afa46598d1b0b9212b39d78/Untitled%2016.png"/></a></figure></details></li></ul><ul id="f39d840f-c67f-4fe0-b35c-41a3cfbf62b0" class="toggle"><li><details open=""><summary>aggregate</summary><figure id="6df6d5b0-8d11-4d06-a936-4f5077752c2b" class="image"><a href="eloquent%20ORM%200f5b137a9afa46598d1b0b9212b39d78/Untitled%2017.png"><img style="width:966px" src="eloquent%20ORM%200f5b137a9afa46598d1b0b9212b39d78/Untitled%2017.png"/></a></figure></details></li></ul><ul id="5a0b90ab-ea81-4dd3-993f-56f25571a15a" class="toggle"><li><details open=""><summary>select</summary><figure id="f4c42ff3-5592-43d9-9990-d31b08f8a8df" class="image"><a href="eloquent%20ORM%200f5b137a9afa46598d1b0b9212b39d78/Untitled%2018.png"><img style="width:1295px" src="eloquent%20ORM%200f5b137a9afa46598d1b0b9212b39d78/Untitled%2018.png"/></a></figure></details></li></ul><ul id="d14e6011-eccc-4d9b-a024-a7db9ff8f7ce" class="toggle"><li><details open=""><summary>basic where clause operators</summary><figure id="f2a9b93a-5298-463c-b365-63aebfb69e3e" class="image"><a href="eloquent%20ORM%200f5b137a9afa46598d1b0b9212b39d78/Untitled%2019.png"><img style="width:1223px" src="eloquent%20ORM%200f5b137a9afa46598d1b0b9212b39d78/Untitled%2019.png"/></a></figure></details></li></ul><ul id="894abfc8-deac-4387-a695-a7111026bd07" class="toggle"><li><details open=""><summary>important where clause methods</summary><figure id="9da80451-4f46-4271-a7f4-9fe28a25ce4a" class="image"><a href="eloquent%20ORM%200f5b137a9afa46598d1b0b9212b39d78/Untitled%2020.png"><img style="width:1230px" src="eloquent%20ORM%200f5b137a9afa46598d1b0b9212b39d78/Untitled%2020.png"/></a></figure></details></li></ul><ul id="11495153-362b-47af-88f0-ed7c48d6c149" class="toggle"><li><details open=""><summary>order group limit</summary><figure id="564a69cc-d1d3-494d-9a4e-c1c117fd443f" class="image"><a href="eloquent%20ORM%200f5b137a9afa46598d1b0b9212b39d78/Untitled%2021.png"><img style="width:1164px" src="eloquent%20ORM%200f5b137a9afa46598d1b0b9212b39d78/Untitled%2021.png"/></a></figure></details></li></ul><ul id="195eb871-cdde-4f13-aadb-afa09b06cd57" class="toggle"><li><details open=""><summary>paginate</summary><figure id="a3d84a50-b973-4115-8647-1284b03f67b6" class="image"><a href="eloquent%20ORM%200f5b137a9afa46598d1b0b9212b39d78/Untitled%2022.png"><img style="width:1276px" src="eloquent%20ORM%200f5b137a9afa46598d1b0b9212b39d78/Untitled%2022.png"/></a></figure><figure id="1da0ad7d-c713-499f-90cd-2e5e5f8f53a0" class="image"><a href="eloquent%20ORM%200f5b137a9afa46598d1b0b9212b39d78/Untitled%2023.png"><img style="width:1299px" src="eloquent%20ORM%200f5b137a9afa46598d1b0b9212b39d78/Untitled%2023.png"/></a></figure></details></li></ul><figure id="94434e1c-90cf-49fc-8af1-ceff8045240b" class="link-to-page"><a href="eloquent%20ORM%200f5b137a9afa46598d1b0b9212b39d78/elequent%20relationship%2094434e1c90cf49fc8af1ceff8045240b.html">elequent relationship</a></figure></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

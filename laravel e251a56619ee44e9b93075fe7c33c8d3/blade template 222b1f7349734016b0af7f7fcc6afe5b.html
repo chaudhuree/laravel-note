@@ -1,0 +1,792 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>blade template</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+    margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-interactiveBlue { background-color: rgba(35, 131, 226, .07); }
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-translucentGray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+.select-value-color-pageGlass { background-color: undefined; }
+.select-value-color-washGlass { background-color: undefined; }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="222b1f73-4973-4016-b0af-7f7fcc6afe5b" class="page sans"><header><h1 class="page-title">blade template</h1><p class="page-description"></p></header><div class="page-body"><ul id="0089c092-2e28-4507-bbb0-cc7bc128fdaf" class="toggle"><li><details open=""><summary>blade file</summary><pre id="a6df18ab-66fa-4f48-8b07-33a18bf21030" class="code"><code>// test.blade.php
+&lt;h1&gt;test blade file&lt;/h1&gt;</code></pre></details></li></ul><ul id="897757e8-aac0-40e3-9690-6a9d7dfa12b1" class="toggle"><li><details open=""><summary>DemoController</summary><pre id="164d543b-5013-48e4-b3bf-1f545fd42836" class="code"><code>&lt;?php
+
+namespace App\Http\Controllers;
+use Illuminate\Http\Request;
+
+class DemoController extends Controller
+{
+   function demoAction(Request $request)
+   {
+      return view(&#x27;test&#x27;);
+   }
+}</code></pre></details></li></ul><ul id="3418d264-1204-495a-a96d-86ed39c71b20" class="toggle"><li><details open=""><summary>route</summary><pre id="fe0beaaf-a7bb-450a-97d2-91c2c50c634d" class="code"><code>&lt;?php
+
+use App\Http\Controllers\DemoController;
+use Illuminate\Support\Facades\Route;
+
+Route::get(&#x27;/&#x27;, function () {
+    return view(&#x27;welcome&#x27;);
+});
+
+Route::get(&#x27;/demo&#x27;, [DemoController::class, &#x27;demoAction&#x27;]);</code></pre></details></li></ul><p id="995a6ec0-9f14-45a0-9869-c9f47423f687" class="">
+</p><h2 id="e05167fe-ce3b-4745-8952-9edeb4130067" class="">passing parameter from controller</h2><ul id="12304ded-cb55-410a-a5ef-af2e11781be9" class="toggle"><li><details open=""><summary>DemoController</summary><pre id="4849b4cc-0e62-402c-9663-716321b8ad35" class="code"><code>&lt;?php
+
+namespace App\Http\Controllers;
+use Illuminate\Http\Request;
+
+class DemoController extends Controller
+{
+   function demoAction(Request $request)
+   {
+      $data =[ &#x27;name&#x27; =&gt; &#x27;chaudhuree&#x27;, &#x27;email&#x27; =&gt; &#x27;chaudhuree@gmail.com&#x27;];
+      return view(&#x27;test&#x27;, $data);
+   }
+}</code></pre></details></li></ul><ul id="87dcb1cf-6a0e-420a-b7ec-c046981354a8" class="toggle"><li><details open=""><summary>test.blade.php</summary><pre id="7a0f1f7a-407f-4b4b-8809-9058a6d9d3be" class="code"><code>&lt;h1&gt;test blade file&lt;/h1&gt;
+
+&lt;address&gt;
+    Name: {{ $name }}&lt;br&gt;
+    Email: {{ $email }}
+&lt;/address&gt;</code></pre></details></li></ul><p id="85b07de3-7bd2-4d32-9c21-f29ea42fa660" class="">
+</p><h2 id="52ec3a53-65e3-4a9c-8d60-188f85022d4a" class="">blade if else </h2><ul id="82f80db3-753e-442d-b6f9-f36443ff2ffa" class="toggle"><li><details open=""><summary>important we can’t pass direct value . we have to pass associative array</summary><pre id="977755e5-16e2-48de-9e6e-f7062f9b9ae5" class="code"><code>&lt;?php
+
+namespace App\Http\Controllers;
+use Illuminate\Http\Request;
+
+class DemoController extends Controller
+{
+   function demoAction(Request $request)
+   {
+      $sum=24;
+      return view(&#x27;test&#x27;, $sum);
+   }
+}</code></pre><p id="2896ace2-817f-4c92-9eec-02508acf3c2c" class="">in blade template it will throw error</p></details></li></ul><ul id="cc426a23-75ac-4a5e-84a2-7fabe9b2ed7f" class="toggle"><li><details open=""><summary>image</summary><figure id="af35f7d8-b58d-4c3f-97ad-f0868f8a5b2b" class="image"><a href="blade%20template%20222b1f7349734016b0af7f7fcc6afe5b/Untitled.png"><img style="width:288px" src="blade%20template%20222b1f7349734016b0af7f7fcc6afe5b/Untitled.png"/></a></figure></details></li></ul><ul id="8fc543c5-22f5-46c3-ae7e-5377cdb69c22" class="toggle"><li><details open=""><summary>DemoController.php</summary><pre id="be32f1ba-dbdf-4850-be5d-af82d7000158" class="code"><code>&lt;?php
+
+namespace App\Http\Controllers;
+use Illuminate\Http\Request;
+
+class DemoController extends Controller
+{
+   function demoAction(Request $request)
+   {
+      $sum=24;
+      return view(&#x27;test&#x27;, [&#x27;sum&#x27; =&gt; $sum]);
+   }
+}</code></pre></details></li></ul><ul id="6e45be4e-ff2d-4ec1-9368-1c337d70b463" class="toggle"><li><details open=""><summary>test.blade.php</summary><pre id="e18d7730-b707-468d-8425-108b84095693" class="code"><code>&lt;h1&gt;test blade file&lt;/h1&gt;
+
+@if ($sum %2=== 0)
+&lt;p&gt;Sum is even&lt;/p&gt;
+@elseif ($sum %2 !== 0)
+&lt;p&gt;Sum is odd&lt;/p&gt;
+@else
+&lt;p&gt;Sum is zero&lt;/p&gt;
+@endif</code></pre></details></li></ul><p id="70fb49ea-366f-4155-9646-1fa79db2a920" class="">
+</p><h2 id="bb125152-e0ca-4ebb-bd8c-2f1364abbde3" class="">switch case</h2><ul id="0b826b9a-da26-4d63-8018-12e4dd2c4b65" class="toggle"><li><details open=""><summary>image</summary><figure id="281da314-9d33-4d69-9491-a1ddfaf1277e" class="image"><a href="blade%20template%20222b1f7349734016b0af7f7fcc6afe5b/Untitled%201.png"><img style="width:288px" src="blade%20template%20222b1f7349734016b0af7f7fcc6afe5b/Untitled%201.png"/></a></figure></details></li></ul><p id="474dca4c-190c-435b-94b0-bba77171b764" class="">
+</p><h2 id="26aec004-792c-49da-b1f7-86b8d651c328" class="">for loop</h2><ul id="e29d3e4b-7612-4d86-bd6e-0fcdd7d16ccc" class="toggle"><li><details open=""><summary>image</summary><figure id="08ed4503-04f7-4199-8095-bdee587a85f5" class="image"><a href="blade%20template%20222b1f7349734016b0af7f7fcc6afe5b/Untitled%202.png"><img style="width:336px" src="blade%20template%20222b1f7349734016b0af7f7fcc6afe5b/Untitled%202.png"/></a></figure></details></li></ul><p id="1fab9f95-4bbf-4dce-8abb-a3d39b8c773b" class="">
+</p><h2 id="f9f16a7c-631f-4277-a8c5-c00ed4dd39b8" class="">for each loop</h2><ul id="b690d300-d92f-4925-a309-2dbc114b574a" class="toggle"><li><details open=""><summary>image</summary><figure id="bb43fa75-7920-459b-9629-191d84bf03c0" class="image"><a href="blade%20template%20222b1f7349734016b0af7f7fcc6afe5b/Untitled%203.png"><img style="width:1352px" src="blade%20template%20222b1f7349734016b0af7f7fcc6afe5b/Untitled%203.png"/></a></figure></details></li></ul><p id="797c04c9-0d42-4b1d-b6fb-43621dae752d" class="">
+</p><p id="5ab99b0c-5b59-4662-b95f-468677fa46ed" class="">
+</p><h2 id="814de207-77be-4667-8830-43528cbdc5b9" class="">including asset</h2><p id="9c77a2f9-5799-4f32-87ac-2f8c7cfd9c74" class="">laravel er <code>asset </code>keyword ase oita dea add kora hoy .like bootstrap library, onnanno js library etc.</p><p id="2e3e97d6-1ec0-43fc-bb17-68988737269c" class="">
+</p><blockquote id="e255b6d3-1aa0-407f-8d52-fa9808b54d7f" class="">sob asset public directory te rakhbo</blockquote><ul id="45881a03-db95-43d4-8c1b-3c7eb0308ebb" class="toggle"><li><details open=""><summary>code</summary><pre id="54237dca-91ba-433b-9372-1542d6f4b35a" class="code"><code>&lt;head&gt;
+
+  &lt;title&gt;asset binding&lt;/title&gt;
+  &lt;link rel=&quot;stylesheet&quot; href=&quot;{{asset(&#x27;css/style.css&#x27;)}}&quot;&gt;
+&lt;/head&gt;
+
+&lt;body&gt;
+
+  &lt;img src=&quot;{{asset(&#x27;img/1.jpg&#x27;)}}&quot; alt=&quot;&quot;&gt;
+
+  &lt;script src=&quot;{{asset(&#x27;js/index.js&#x27;)}}&quot;&gt;&lt;/script&gt;
+&lt;/body&gt;
+
+&lt;/html&gt;</code></pre></details></li></ul><ul id="104b268e-fa99-4d15-976b-666f58dda8c1" class="toggle"><li><details open=""><summary>image</summary><figure id="4d980c2d-af90-492c-b40e-14e71a9ebca1" class="image"><a href="blade%20template%20222b1f7349734016b0af7f7fcc6afe5b/Untitled%204.png"><img style="width:432px" src="blade%20template%20222b1f7349734016b0af7f7fcc6afe5b/Untitled%204.png"/></a></figure></details></li></ul><p id="68d0110d-b237-406d-9d8b-14b518ca62c6" class="">
+</p><p id="866ce94a-65f8-4a97-a776-dbe91d46c0d0" class="">
+</p><h2 id="23c5ee5b-4c0c-485e-93f6-57018056c37f" class="">sub view(component based)</h2><div id="afc28cae-2663-43ea-91f2-22e4931c536f" class="column-list"><div id="5e05fcbb-2cf7-4b8d-aec5-f44de11272f2" style="width:38.0952380952381%" class="column"><figure id="b9185e6f-0423-4f9a-a198-65c0c0d70f23" class="image"><a href="blade%20template%20222b1f7349734016b0af7f7fcc6afe5b/Untitled%205.png"><img style="width:333px" src="blade%20template%20222b1f7349734016b0af7f7fcc6afe5b/Untitled%205.png"/></a><figcaption>folder structure</figcaption></figure></div><div id="65f138f6-894f-4c31-ba57-fdc833b6a59f" style="width:61.90476190476192%" class="column"><figure id="b0e0198a-09db-482d-9467-93e02af8d485" class="image"><a href="blade%20template%20222b1f7349734016b0af7f7fcc6afe5b/Untitled%206.png"><img style="width:432px" src="blade%20template%20222b1f7349734016b0af7f7fcc6afe5b/Untitled%206.png"/></a><figcaption>output</figcaption></figure><p id="8bb1c6b5-265f-46b6-ab6d-c279611714eb" class="">
+</p></div></div><ul id="f93b7590-768b-4c83-b3c6-c23f14a490c4" class="toggle"><li><details open=""><summary>test.blade.php</summary><pre id="1b891c08-a054-4f73-a992-4a5d947f98bf" class="code"><code>@include (&#x27;myviews.chaudhuree&#x27;, [&#x27;name&#x27; =&gt; &#x27;chaudhuree&#x27;]) // value pass
+@include (&#x27;myviews.nestedview.mynestedview&#x27;)</code></pre></details></li></ul><ul id="05c59a15-2947-46c7-be59-4fd20ee29ab4" class="toggle"><li><details open=""><summary>chaudhuree.blade.php</summary><pre id="ff68eb47-8ac2-4bdf-b9b9-75b7ae1f0856" class="code"><code>&lt;h1&gt;my name is {{$name}}&lt;/h1&gt;</code></pre></details></li></ul><ul id="1a757479-80f9-4709-9277-e444b4e07597" class="toggle"><li><details open=""><summary>mynestedview.blade.php</summary><pre id="bbb7c77a-b200-4da0-9aae-d50b89c5ac62" class="code"><code>&lt;h1&gt;this is two step nested view&lt;/h1&gt;</code></pre></details></li></ul><p id="75535f44-9fd5-4edf-92bb-afc899bdbcc3" class="">
+</p><p id="87ef5c57-d1d3-460a-a942-6b268d97b4da" class="">
+</p><h2 id="3a02cbf4-2bb6-4df1-8330-9cf39280770a" class="">MASTER LAYOUT CONCEPT</h2><ul id="4caed360-c0b5-4375-b42b-de39e6eafaf5" class="toggle"><li><details open=""><summary>image</summary><figure id="3dfb3c21-808d-419e-97aa-3270ecfb195e" class="image"><a href="blade%20template%20222b1f7349734016b0af7f7fcc6afe5b/Untitled%207.png"><img style="width:1647px" src="blade%20template%20222b1f7349734016b0af7f7fcc6afe5b/Untitled%207.png"/></a></figure><pre id="1a8d9b18-9734-4381-89c3-14664c3e63aa" class="code"><code>// original folder structure
+.
+└── views/
+    ├── component/
+    │   ├── menu.blade.php
+    │   └── footer.blade.php
+    ├── Layout.blade.php
+    └── Home.blade.php</code></pre></details></li></ul><p id="6b7f842e-063c-4d46-98a1-01333b8caca5" class=""><span style="border-bottom:0.05em solid"><strong>description:</strong></span> <mark class="highlight-orange">layout </mark>a amader header and footer ase. mane header and footer name a blade component create kore amara aikhane seta @include korci.</p><p id="e5280dce-7a26-49c5-9492-12dbecacf8f8" class="">
+</p><pre id="6b9f3181-f4dc-437f-80c8-d949021ff0ae" class="code"><code>// example folder structure
+.
+└── views/
+    ├── component/
+    │   ├── Layout.blade.php
+    │   ├── menu.blade.php
+    │   └── footer.blade.php
+    └── Home.blade.php</code></pre><p id="7e19708f-a478-4ba8-99d9-ec1bb9c1de37" class=""> aikhane akta important bishoy hocce. dhorlam, amader <code>Layout.blade.php</code> file , <code>menu.blade.php</code> and <code>footer.blade.php</code> file 3 tai → component folder er moddhe ase. but jokhn <code>Layout.blade.php</code> te amra header and footer include korte jabo tokhn<mark class="highlight-yellow_background"><strong> amader full path likhte hobe</strong></mark>. sudhu amon likhle hobe na</p><p id="64637949-8bc7-41e2-b3fc-6f7b720075ee" class=""><code>@include(&#x27;menu&#x27;) or @include(&#x27;footer&#x27;)</code></p><p id="40cc2c33-5437-4c57-b638-359a39bb10c9" class="">amader full path e bole dite hobe</p><p id="9c779c6b-da39-4108-8fdc-d7d3ba679a24" class=""><code>@include(&#x27;component.menu&#x27;) or @include(&#x27;component.footer)</code></p><p id="e3de7e4f-46e1-4fc5-8937-5d31f76c6b97" class="">
+</p><p id="68550c53-16a4-4775-b50d-f099abf9f7af" class="">akhn sob sesh a amara Layout.blade.php ta @extend kore Home.blade.php te nilam.</p><p id="0b94445b-c295-4c90-8a3c-fcc389db2572" class="">but amra Layout a @yeld dea akta sction define koci. aita korbe ki child accept korbe and seta ai yeld er place a boshay dibe sequentially.</p><p id="a3e458c1-dea2-40f9-b9da-965895dfc3f2" class="">
+</p><p id="fcbc668c-1098-4822-b4d5-66d3ad50a21b" class="">so j Layout k extend korbe ok er child component gulo @yeld er named place a pathay dite hobe tahole thik tak webpage show korbe.</p><p id="a4ad37a8-5b02-4fd6-806c-0562e164b0e9" class="">
+</p><p id="918b47fc-5a91-4762-9590-40168b6334b7" class="">so Home.blade.php jokhn Layout.blade.php k @extend korlo tokhn she tar majhe @section create korlo component name a and aitar ending o define kore dilo. tarpor korlo ki er majhe child component gulo include kore dilo. and website thik thak show korlo.</p><p id="ab9b66c4-a7d2-445d-8128-155fb97c9c2b" class="">
+</p><p id="95fbfe37-fdfa-443c-bc9e-5790b3396ca3" class="">doubt clear: amra question korte pari amar Home.blade.php te @extend korlam, @include keno noy. because, @include korle @yeld kora jay na. mane component inject kora jay na.</p></div></article><span class="sans" style="font-size:14px;padding-top:2em"><hr/><details open="" style="padding-top:1em"><summary style="font-weight:600;font-size:1.25em;line-height:1.3;margin:0">Inline comments</summary><div class="indented"><div><p style="padding:0.2em"><b>Block text</b>: <mark class="highlight-yellow_background">yeld </mark></p><ul class="toggle"><li><div><span class="user" style="padding:0.2em"><img src="https://lh3.googleusercontent.com/a-/AOh14Gg06-W5x8KMMRxncPgyX2_y8K4HqgNGxuSwHGOU=s100" class="icon user-icon"/><span><b>sOhan chaudhuree</b> <time style="font-size:0.8em">Nov 16, 2023, 1:21 AM</time></span></span></div><div style="padding:0.2em">jemon ai project er khetre component name</div><div style="padding:0.3em"></div></li></ul></div><hr/></div></details></span></body></html>
